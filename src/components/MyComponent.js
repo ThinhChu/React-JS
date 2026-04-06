@@ -10,11 +10,14 @@ class Mycomponent extends React.Component {
     age: 25,
   };
 
-  handleClick() {
-    console.log("Đã click thành công");
-  }
+  handleClick = (event) => {
+    this.setState({
+      name: "Sdadas",
+    });
+    console.log("Đã click thành công", this.state.name);
+  };
 
-  handleHover() {
+  handleHover(event) {
     console.log("Đã hover thành công");
   }
 
