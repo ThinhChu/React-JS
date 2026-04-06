@@ -30,8 +30,6 @@ class UseInfo extends React.Component {
       <div>
         My name is {this.state.name} and i'm from {this.state.address}, i'm{" "}
         {this.state.age}
-        <button onClick={this.handleClick}>Click</button>
-        <button onMouseOver={this.handleHover}>Hover</button>
         <form onSubmit={this.handleSubmit}>
           <label>Tên:</label>
           <input type="text" onChange={this.handleChangeName} />
