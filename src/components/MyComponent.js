@@ -10,11 +10,21 @@ class Mycomponent extends React.Component {
     age: 25,
   };
 
+  handleClick() {
+    console.log("Đã click thành công");
+  }
+
+  handleHover() {
+    console.log("Đã hover thành công");
+  }
+
   //JSX
   render() {
     return (
       <div>
         My name is {this.state.name} and i'm from {this.state.address}
+        <button onClick={this.handleClick}>Click</button>
+        <button onMouseOver={this.handleHover}>Hover</button>
       </div>
     );
   }
