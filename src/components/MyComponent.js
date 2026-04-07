@@ -26,11 +26,16 @@ class Mycomponent extends React.Component {
     // const myInfor = ["a", "b", "c"];
     // DRY: Don't Repeat yourseft
     return (
-      <div>
+      // <React.Fragment>
+      //   <AddUseInfor handleAddNewUser={this.handleAddNewUser} />
+      //   <br />
+      //   <DisplayInfor listUsers={this.state.listUsers} />
+      // </React.Fragment>
+      <>
         <AddUseInfor handleAddNewUser={this.handleAddNewUser} />
         <br />
         <DisplayInfor listUsers={this.state.listUsers} />
-      </div>
+      </>
     );
   }
 }
