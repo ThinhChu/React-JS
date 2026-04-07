@@ -1,11 +1,17 @@
 import React from "react";
 import "./style/DisplayInfor.scss";
-import logo from "../logo.svg";
+// import logo from "../logo.svg";
 
 class DisplayInfor extends React.Component {
-  state = {
-    isShowListUsers: true,
-  };
+  constructor(props) {
+    console.log("check constructor");
+
+    super(props);
+    //Babel compiler
+    this.state = {
+      isShowListUsers: true,
+    };
+  }
 
   handleShowHide = (e) => {
     // console.log(this.state.isShowListUsers);
@@ -15,7 +21,16 @@ class DisplayInfor extends React.Component {
     });
   };
 
+  componentDidMount() {
+    console.log("check componentDidMount");
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log("check componentDidUpdate");
+  }
+
   render() {
+    console.log("check render");
     // console.log(this.props);
     // Destructuring array/object
     const { listUsers } = this.props;
