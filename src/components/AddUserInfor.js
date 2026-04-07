@@ -1,9 +1,8 @@
 import React from "react";
 
-class UseInfo extends React.Component {
+class AddUseInfor extends React.Component {
   state = {
     name: "Thịnh",
-    address: "511/20 Thống Nhất",
     age: 25,
   };
 
@@ -23,13 +22,18 @@ class UseInfo extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
+    const userNew = {
+      id: Math.random(1, 100),
+      name: this.state.name,
+      age: this.state.age,
+    };
+    // console.log(this.state);
+    this.props.handleAddNewUser(userNew);
   };
   render() {
     return (
       <div>
-        My name is {this.state.name} and i'm from {this.state.address}, i'm{" "}
-        {this.state.age}
+        My name is {this.state.name} and i'm {this.state.age}
         <form onSubmit={this.handleSubmit}>
           <label>Tên:</label>
           <input type="text" onChange={this.handleChangeName} />
@@ -42,4 +46,4 @@ class UseInfo extends React.Component {
   }
 }
 
-export default UseInfo;
+export default AddUseInfor;

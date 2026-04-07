@@ -2,7 +2,7 @@
 // function component
 
 import React from "react";
-import UseInfo from "./UserInfo";
+import AddUseInfor from "./AddUserInfor";
 import DisplayInfor from "./DisplayInfor";
 
 class Mycomponent extends React.Component {
@@ -13,13 +13,21 @@ class Mycomponent extends React.Component {
       { id: 3, name: "Lắqqe", age: 16 },
     ],
   };
+
+  handleAddNewUser = (objUserNew) => {
+    // console.log(objUserNew);
+    this.setState({
+      listUsers: [objUserNew, ...this.state.listUsers],
+    });
+  };
+
   //JSX
   render() {
-    const myInfor = ["a", "b", "c"];
+    // const myInfor = ["a", "b", "c"];
     // DRY: Don't Repeat yourseft
     return (
       <div>
-        <UseInfo />
+        <AddUseInfor handleAddNewUser={this.handleAddNewUser} />
         <br />
         <DisplayInfor listUsers={this.state.listUsers} />
       </div>
