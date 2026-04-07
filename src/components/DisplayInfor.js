@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style/DisplayInfor.scss";
 // import logo from "../logo.svg";
 
@@ -45,6 +45,20 @@ const DisplayInfor = (props) => {
   const handleShowHideListUsers = () => {
     setShowHideListUser(!isShowListUsers);
   };
+
+  // componentDidMount chỉ chạy 1 lần sau khi component được render lần đầu tiên
+  useEffect(() => {
+    setTimeout(() => {
+      alert("Hello world");
+    }, 3000);
+  }, []);
+
+  // componentDidUpdate chạy sau khi component được cập nhật (render lại) và có sự thay đổi về props hoặc state hoặc theo điều kiện
+  useEffect(() => {
+    if (listUsers.length === 0) {
+      alert("You have deleted all the users");
+    }
+  }, [listUsers]);
 
   return (
     <div className="displayInforItem">
