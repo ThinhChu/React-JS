@@ -21,20 +21,25 @@ class Mycomponent extends React.Component {
     });
   };
 
+  handleDeleteUser = (userId) => {
+    let listUsersClone = [...this.state.listUsers];
+    let listUserNew = listUsersClone.filter((item) => item.id !== userId);
+    this.setState({
+      listUsers: listUserNew,
+    });
+  };
+
   //JSX
   render() {
-    // const myInfor = ["a", "b", "c"];
     // DRY: Don't Repeat yourseft
     return (
-      // <React.Fragment>
-      //   <AddUseInfor handleAddNewUser={this.handleAddNewUser} />
-      //   <br />
-      //   <DisplayInfor listUsers={this.state.listUsers} />
-      // </React.Fragment>
       <>
         <AddUseInfor handleAddNewUser={this.handleAddNewUser} />
         <br />
-        <DisplayInfor listUsers={this.state.listUsers} />
+        <DisplayInfor
+          listUsers={this.state.listUsers}
+          handleDeleteUser={this.handleDeleteUser}
+        />
       </>
     );
   }
