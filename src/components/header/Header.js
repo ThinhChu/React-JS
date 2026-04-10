@@ -1,3 +1,4 @@
+import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -23,11 +24,13 @@ function BasicExample() {
             </NavLink>
           </Nav>
           <Nav>
-            <NavDropdown title="Sign up" id="basic-nav-dropdown">
+            {/* <NavDropdown title="Sign up" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Login</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Log out</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Profile</NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
+            <Button variant="primary">Đăng nhập</Button>
+            <Button variant="outline-primary" className="ml-2">Đăng ký</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>

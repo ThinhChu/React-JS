@@ -9,7 +9,9 @@ const App = () => {
         <Headers />
       </div>
       <div className="main-container">
-        <div className="sidebar-container"></div>
+        <div className="sidebar-container">
+          
+        </div>
         <div className="content-container">
           <Outlet />
         </div>
