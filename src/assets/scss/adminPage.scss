@@ -1,0 +1,20 @@
+.admin-container {
+  display: flex;
+  .sidebar-container {
+    .ps-sidebar-root {
+      height: 100vh;
+      .logoAdmin {
+        font-size: 2rem;
+        text-align: center;
+        padding-top: 20px;
+      }
+      .ps-sidebar-container {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+  .content-container {
+    padding: 30px;
+  }
+}
