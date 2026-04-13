@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import Sidebar from "./sidebar/Sidebar";
 
 const Admin = (props) => {
@@ -6,7 +7,9 @@ const Admin = (props) => {
       <div className="sidebar-container">
         <Sidebar />
       </div>
-      <div className="content-container">Admin component</div>
+      <div className="content-container">
+        <Outlet />
+      </div>
     </div>
   );
 };

@@ -2,8 +2,9 @@ import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { IoMdDocument } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import { MdFeaturedPlayList } from "react-icons/md";
-import { useState } from "react";
+import React, { useState } from "react";
 import "../../../assets/scss/adminPage.scss";
+import { Link } from "react-router-dom";
 
 const CSidebar = (props) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -20,9 +21,13 @@ const CSidebar = (props) => {
       {/* CONTENT / MENU (Phần này sẽ tự giãn ra) */}
       <div style={{ flex: 1, overflowY: "auto" }}>
         <Menu>
-          <MenuItem icon={<IoMdDocument />}> Dashboard </MenuItem>
+          <MenuItem icon={<IoMdDocument />} component={<Link to="/admin" />}>
+            Dashboard
+          </MenuItem>
           <SubMenu icon={<MdFeaturedPlayList />} label="Tính năng">
-            <MenuItem> Quản lý Users </MenuItem>
+            <MenuItem component={<Link to="/admin/manage-users" />}>
+              Quản lý Users
+            </MenuItem>
             <MenuItem> Quản lý bài Quiz </MenuItem>
             <MenuItem> Quản lý câu hỏi </MenuItem>
           </SubMenu>
