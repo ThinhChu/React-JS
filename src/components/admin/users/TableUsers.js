@@ -1,24 +1,14 @@
-import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { getAllUsers } from "../../../services/apiServiceUser";
-import { toast } from "react-toastify";
 
 const TableUsers = (props) => {
-  const [listUsers, setListUsers] = useState([]);
-  // Để các phần tử giao diện chạy hết r mới lấy xuất dữ liệu
-  useEffect(() => {
-    showAllUsers();
-  }, []);
-  const showAllUsers = async () => {
-    const res = await getAllUsers();
-    if (res && res.DT) {
-      setListUsers(res.DT);
-    }
-    if (res.EC !== 0) {
-      toast.info(res.EM);
-    }
+  const { listUsers } = props;
+
+  const handleUpdateUser = (data) => {
+    props.updateUser(data);
+    // console.log(id);
   };
+
   return (
     <Table striped bordered>
       <thead>
@@ -39,7 +29,12 @@ const TableUsers = (props) => {
               <td>{item.email}</td>
               <td>{item.role}</td>
               <td>
-                <Button variant="primary">Edit</Button>
+                <Button
+                  variant="primary"
+                  onClick={() => handleUpdateUser(item)}
+                >
+                  Edit
+                </Button>
                 <Button variant="danger ml-2">Delete</Button>
               </td>
             </tr>

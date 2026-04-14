@@ -4,13 +4,15 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import "../../../assets/scss/modalUser.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { postCreateNewUser } from "../../../services/apiServiceUser";
+import __ from "lodash";
 
 const ModalUser = (props) => {
-  const { show, setShow } = props;
+  const { show, setShow, update, dataUpdate } = props;
+
   const handleClose = () => {
     setShow(false);
     setUserName("");
@@ -27,6 +29,19 @@ const ModalUser = (props) => {
   const [password, setPassword] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
+
+  useEffect(() => {
+    if (!__.isEmpty(dataUpdate)) {
+      setUserName(dataUpdate.username);
+      setRole(dataUpdate.role);
+      setEmail(dataUpdate.email);
+      // const [password, setPassword] = useState("");
+      // const [selectedImage, setSelectedImage] = useState("");
+      if (dataUpdate.image) {
+        setPreviewUrl(`data:image/png;base64,${dataUpdate.image}`);
+      }
+    }
+  }, [dataUpdate]);
 
   const handleFileImage = (event) => {
     // console.log(event.target.files[0]);
@@ -88,6 +103,32 @@ const ModalUser = (props) => {
     if (res.EC === 0) {
       toast.success(res.EM);
       handleClose();
+      await props.showAllUsers();
+    }
+  };
+
+  const handleUpdateUser = async (event) => {
+    // Validation
+    const checkEmail = validateEmail(email);
+    if (!checkEmail) {
+      toast.error("Vui lòng kiểm tra lại mục email");
+      return;
+    }
+    // Data
+    const res = await postCreateNewUser(
+      userName,
+      role,
+      email,
+      password,
+      selectedImage,
+    );
+    if (res.EC !== 0) {
+      toast.info(res.EM);
+    }
+    if (res.EC === 0) {
+      toast.success(res.EM);
+      handleClose();
+      await props.showAllUsers();
     }
   };
 
@@ -95,7 +136,7 @@ const ModalUser = (props) => {
     <>
       <Modal show={show} size={props.size} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add User</Modal.Title>
+          <Modal.Title>{update ? "Update a user" : "Add user"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -112,10 +153,11 @@ const ModalUser = (props) => {
               </Form.Group>
               <Form.Group as={Col} controlId="formGridState">
                 <Form.Label>Role</Form.Label>
-                <Form.Select defaultValue={role} onChange={handleInputRole}>
+                <Form.Select value={role} onChange={handleInputRole}>
                   <option>Choose...</option>
                   <option>Member</option>
-                  <option>Admin</option>
+                  <option>ADMIN</option>
+                  <option>USER</option>
                 </Form.Select>
               </Form.Group>
             </Row>
@@ -149,6 +191,7 @@ const ModalUser = (props) => {
                   accept="image/*"
                   className="file-hidden"
                   onChange={handleFileImage}
+                  // value={dataUpdate && dataUpdate.image ? dataUpdate.image : ""}
                 />
                 {previewUrl ? (
                   <img
@@ -168,7 +211,12 @@ const ModalUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleCreateUser()}>
+          <Button
+            variant="primary"
+            onClick={
+              update ? () => handleUpdateUser() : () => handleCreateUser()
+            }
+          >
             Save Changes
           </Button>
         </Modal.Footer>
