@@ -7,7 +7,7 @@ import "../../../assets/scss/modalUser.scss";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import postCreateNewUser from "../../../services/apiServiceUser";
+import { postCreateNewUser } from "../../../services/apiServiceUser";
 
 const ModalUser = (props) => {
   const { show, setShow } = props;
