@@ -5,9 +5,9 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import "../../../assets/scss/modalUser.scss";
 import { useState } from "react";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import postCreateNewUser from "../../../services/apiServiceUser";
 
 const ModalUser = (props) => {
   const { show, setShow } = props;
@@ -75,25 +75,19 @@ const ModalUser = (props) => {
       return;
     }
     // Data
-    const data = new FormData();
-    data.append("username", userName);
-    data.append("role", role);
-    data.append("email", email);
-    data.append("password", password);
-    data.append("userImage", selectedImage);
-    try {
-      let res = await axios.post(
-        "http://localhost:8081/api/v1/participant",
-        data,
-      );
-      if (res.data.EC === 1) {
-        toast.info(res.data.EM);
-      } else {
-        toast.success(res.data.EM);
-        handleClose();
-      }
-    } catch (error) {
-      console.log("check responsive >>", error);
+    const res = await postCreateNewUser(
+      userName,
+      role,
+      email,
+      password,
+      selectedImage,
+    );
+    if (res.EC !== 0) {
+      toast.info(res.EM);
+    }
+    if (res.EC === 0) {
+      toast.success(res.EM);
+      handleClose();
     }
   };
 
