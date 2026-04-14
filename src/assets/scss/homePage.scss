@@ -1,22 +1,23 @@
 .home-container {
-    .content-container {
-        button {
-            padding : 10px 20x;
-            &.w-fit {
-                width: fit-content;
-            }
-        }
+  .content-container {
+    button {
+      padding: 10px 20x;
+      &.w-fit {
+        width: fit-content;
+      }
     }
+  }
 
-    .thumb-container.col-6 {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 150px;
+  .thumb-container.col-6 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
 
-        video {
-            width: 25rem;
-            height: auto;
-        }
+    video {
+      width: 100%;
+      max-width: 25rem;
+      height: auto;
     }
+  }
 }

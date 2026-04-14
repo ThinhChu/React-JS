@@ -6,8 +6,12 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import "../../../assets/scss/modalUser.scss";
 import React, { useState } from "react";
+import axios from "axios";
 
 const ModalUser = (props) => {
+  const { show, setShow } = props;
+  const handleClose = () => setShow(false);
+
   const [userName, setUserName] = useState("");
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +31,7 @@ const ModalUser = (props) => {
   };
 
   const handleInputUserName = (event) => {
-    // console.log(event.target.value);
+    // console.log(userName);
     setUserName(event.target.value);
   };
 
@@ -46,8 +50,23 @@ const ModalUser = (props) => {
     setPassword(event.target.value);
   };
 
+  const handleCreateUser = async (event) => {
+    // console.log();
+    const data = new FormData();
+    data.append("username", userName);
+    data.append("role", role);
+    data.append("email", email);
+    data.append("password", password);
+    data.append("userImage", selectedImage);
+    let res = await axios.post(
+      "http://localhost:8081/api/v1/participant",
+      data,
+    );
+    console.log("check responsive >>", res);
+  };
+
   return (
-    <Modal {...props}>
+    <Modal show={show} size={props.size} onHide={() => props.setShow(false)}>
       <Modal.Header closeButton>
         <Modal.Title>Add User</Modal.Title>
       </Modal.Header>
@@ -119,10 +138,12 @@ const ModalUser = (props) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.onHide}>
+        <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary">Save Changes</Button>
+        <Button variant="primary" onClick={() => handleCreateUser()}>
+          Save Changes
+        </Button>
       </Modal.Footer>
     </Modal>
   );

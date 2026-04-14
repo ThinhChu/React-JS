@@ -15,7 +15,7 @@ const ManageUsers = (props) => {
         <Button variant="primary" className="ml-2" onClick={handleShow}>
           Thêm mới
         </Button>
-        <ModalUser show={show} size="xl" onHide={() => setShow(false)} />
+        <ModalUser show={show} setShow={setShow} size="xl" />
       </div>
 
       <div className="body-admin mt-3">
