@@ -9,6 +9,15 @@ const TableUsers = (props) => {
     // console.log(id);
   };
 
+  const handleViewUser = (data) => {
+    props.viewUser(data);
+    // console.log(id);
+  };
+
+  const handleDeleteUser = (data) => {
+    props.deleteUser(data);
+  };
+
   return (
     <Table striped bordered>
       <thead>
@@ -29,13 +38,19 @@ const TableUsers = (props) => {
               <td>{item.email}</td>
               <td>{item.role}</td>
               <td>
+                <Button variant="primary" onClick={() => handleViewUser(item)}>
+                  View
+                </Button>
+
                 <Button
-                  variant="primary"
+                  variant="warning mx-2"
                   onClick={() => handleUpdateUser(item)}
                 >
                   Edit
                 </Button>
-                <Button variant="danger ml-2">Delete</Button>
+                <Button variant="danger" onClick={() => handleDeleteUser(item)}>
+                  Delete
+                </Button>
               </td>
             </tr>
           );

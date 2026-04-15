@@ -14,7 +14,7 @@ import {
 import __ from "lodash";
 
 const ModalUser = (props) => {
-  const { show, setShow, update, dataUpdate } = props;
+  const { show, setShow, action, dataUpdate } = props;
 
   const handleClose = () => {
     setShow(false);
@@ -129,11 +129,21 @@ const ModalUser = (props) => {
     }
   };
 
+  const titleModal = (action) => {
+    if (action === "update") {
+      return "Update a user";
+    } else if (action === "create") {
+      return "Add new user";
+    } else {
+      return "View a user";
+    }
+  };
+
   return (
     <>
       <Modal show={show} size={props.size} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{update ? "Update a user" : "Add user"}</Modal.Title>
+          <Modal.Title>{titleModal(action)}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -208,14 +218,18 @@ const ModalUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button
-            variant="primary"
-            onClick={
-              update ? () => handleUpdateUser() : () => handleCreateUser()
-            }
-          >
-            Save Changes
-          </Button>
+          {action !== "view" && (
+            <Button
+              variant="primary"
+              onClick={
+                action === "update"
+                  ? () => handleUpdateUser()
+                  : () => handleCreateUser()
+              }
+            >
+              Save Changes
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
       <ToastContainer />
