@@ -2,10 +2,16 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import ModalUser from "./ModalUser";
 import ModalDeleteUser from "./ModalDelete";
-import TableUsers from "./TableUsers";
-import { getAllUsers } from "../../../services/apiServiceUser";
+// import TableUsers from "./TableUsers";
+import TableUsersPaginate from "./TableUserPaginate";
+import {
+  getAllUsers,
+  getUsersWithPaginate,
+} from "../../../services/apiServiceUser";
 
 const ManageUsers = (props) => {
+  const LIMIT_USER = 2;
+  const [pageCount, setPageCount] = useState(0);
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [action, setAction] = useState("create");
@@ -25,12 +31,28 @@ const ManageUsers = (props) => {
   // Get users
   // Để các phần tử giao diện chạy hết r mới lấy xuất dữ liệu
   useEffect(() => {
-    showAllUsers();
+    // showAllUsers();
+    showUsersWithPaginate(1);
   }, []);
+
+  useEffect(() => {
+    // showAllUsers();
+    showUsersWithPaginate(1);
+  }, [pageCount]);
+
   const showAllUsers = async () => {
     const res = await getAllUsers();
     if (res && res.DT) {
       setListUsers(res.DT);
+    }
+  };
+
+  const showUsersWithPaginate = async (page) => {
+    const res = await getUsersWithPaginate(page, LIMIT_USER);
+    if (res && res.DT && res.EC === 0) {
+      // setListUsers(res.DT);
+      setPageCount(res.DT.totalPages);
+      setListUsers(res.DT.users);
     }
   };
 
@@ -72,7 +94,7 @@ const ManageUsers = (props) => {
           show={show}
           size="xl"
           setShow={setShow}
-          showAllUsers={showAllUsers}
+          showAllUsers={() => showUsersWithPaginate(1)}
           action={action}
           dataUpdate={dataUpdateUser}
           restDataUser={restDataUser}
@@ -83,15 +105,24 @@ const ManageUsers = (props) => {
           size="xl"
           setShow={setShowDelete}
           dataDelete={dataUpdateUser}
-          showAllUsers={showAllUsers}
+          showAllUsers={() => showUsersWithPaginate(1)}
         />
       </div>
 
       <div className="body-admin mt-3">
-        <TableUsers
+        {/* <TableUsers
           listUsers={listUsers}
-          updateUser={updateUser}
           viewUser={viewUser}
+          updateUser={updateUser}
+          deleteUser={deleteUser}
+        /> */}
+
+        <TableUsersPaginate
+          listUsers={listUsers}
+          showUsersWithPaginate={showUsersWithPaginate}
+          pageCount={pageCount}
+          viewUser={viewUser}
+          updateUser={updateUser}
           deleteUser={deleteUser}
         />
       </div>
