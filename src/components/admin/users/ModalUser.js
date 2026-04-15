@@ -7,7 +7,10 @@ import "../../../assets/scss/modalUser.scss";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { postCreateNewUser } from "../../../services/apiServiceUser";
+import {
+  postCreateNewUser,
+  putUpdateUser,
+} from "../../../services/apiServiceUser";
 import __ from "lodash";
 
 const ModalUser = (props) => {
@@ -21,6 +24,7 @@ const ModalUser = (props) => {
     setPassword("");
     setSelectedImage("");
     setPreviewUrl("");
+    props.restDataUser();
   };
 
   const [userName, setUserName] = useState("");
@@ -108,18 +112,11 @@ const ModalUser = (props) => {
   };
 
   const handleUpdateUser = async (event) => {
-    // Validation
-    const checkEmail = validateEmail(email);
-    if (!checkEmail) {
-      toast.error("Vui lòng kiểm tra lại mục email");
-      return;
-    }
     // Data
-    const res = await postCreateNewUser(
+    const res = await putUpdateUser(
+      dataUpdate.id,
       userName,
       role,
-      email,
-      password,
       selectedImage,
     );
     if (res.EC !== 0) {

@@ -36,6 +36,11 @@ const ManageUsers = (props) => {
     setDataUpdateUser(data);
   };
 
+  // Reset data update user
+  const restDataUser = () => {
+    setDataUpdateUser([]);
+  };
+
   return (
     <>
       <div className="header-admin">
@@ -50,6 +55,7 @@ const ManageUsers = (props) => {
           size="xl"
           update={update}
           dataUpdate={dataUpdateUser}
+          restDataUser={restDataUser}
         />
       </div>
 
