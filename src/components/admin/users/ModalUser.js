@@ -5,8 +5,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import "../../../assets/scss/modalUser.scss";
 import { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import {
   postCreateNewUser,
   putUpdateUser,
@@ -234,7 +233,6 @@ const ModalUser = (props) => {
           )}
         </Modal.Footer>
       </Modal>
-      <ToastContainer />
     </>
   );
 };

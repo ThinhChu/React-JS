@@ -1,8 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { deleteUser } from "../../../services/apiServiceUser";
+import { toast } from "react-toastify";
 const ModalDeleteUser = (props) => {
   const { show, setShow, dataDelete, setPageCurrent } = props;
   const handleClose = () => {
@@ -41,7 +40,6 @@ const ModalDeleteUser = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <ToastContainer />
     </>
   );
 };
