@@ -5,9 +5,11 @@ import { useState } from "react";
 import { postLoginUser } from "../../services/apiServiceUser";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Login = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,6 +19,10 @@ const Login = (props) => {
       toast.info(res.EM);
     }
     if (res.EC === 0) {
+      dispatch({
+        type: "FETCH_LOGIN_USER_SUCCESS",
+        payload: res,
+      });
       toast.success(res.EM);
       navigate("/");
     }
