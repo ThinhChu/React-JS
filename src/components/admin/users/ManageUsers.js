@@ -5,13 +5,14 @@ import ModalDeleteUser from "./ModalDelete";
 // import TableUsers from "./TableUsers";
 import TableUsersPaginate from "./TableUserPaginate";
 import {
-  getAllUsers,
+  // getAllUsers,
   getUsersWithPaginate,
 } from "../../../services/apiServiceUser";
 
 const ManageUsers = (props) => {
   const LIMIT_USER = 2;
   const [pageCount, setPageCount] = useState(0);
+  const [pageCurrent, setPageCurrent] = useState(1);
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [action, setAction] = useState("create");
@@ -40,12 +41,12 @@ const ManageUsers = (props) => {
     showUsersWithPaginate(1);
   }, [pageCount]);
 
-  const showAllUsers = async () => {
-    const res = await getAllUsers();
-    if (res && res.DT) {
-      setListUsers(res.DT);
-    }
-  };
+  // const showAllUsers = async () => {
+  //   const res = await getAllUsers();
+  //   if (res && res.DT) {
+  //     setListUsers(res.DT);
+  //   }
+  // };
 
   const showUsersWithPaginate = async (page) => {
     const res = await getUsersWithPaginate(page, LIMIT_USER);
@@ -94,10 +95,12 @@ const ManageUsers = (props) => {
           show={show}
           size="xl"
           setShow={setShow}
-          showAllUsers={() => showUsersWithPaginate(1)}
+          showAllUsers={showUsersWithPaginate}
           action={action}
           dataUpdate={dataUpdateUser}
           restDataUser={restDataUser}
+          pageCurrent={pageCurrent}
+          setPageCurrent={setPageCurrent}
         />
 
         <ModalDeleteUser
@@ -105,7 +108,9 @@ const ManageUsers = (props) => {
           size="xl"
           setShow={setShowDelete}
           dataDelete={dataUpdateUser}
-          showAllUsers={() => showUsersWithPaginate(1)}
+          showAllUsers={showUsersWithPaginate}
+          pageCurrent={pageCurrent}
+          setPageCurrent={setPageCurrent}
         />
       </div>
 
@@ -122,6 +127,8 @@ const ManageUsers = (props) => {
           showUsersWithPaginate={showUsersWithPaginate}
           pageCount={pageCount}
           viewUser={viewUser}
+          pageCurrent={pageCurrent}
+          setPageCurrent={setPageCurrent}
           updateUser={updateUser}
           deleteUser={deleteUser}
         />

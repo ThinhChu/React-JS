@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { deleteUser } from "../../../services/apiServiceUser";
 const ModalDeleteUser = (props) => {
-  const { show, setShow, dataDelete } = props;
+  const { show, setShow, dataDelete, setPageCurrent } = props;
   const handleClose = () => {
     setShow(false);
     // props.restDataUser();
@@ -18,7 +18,8 @@ const ModalDeleteUser = (props) => {
     if (res.EC === 0) {
       toast.success(res.EM);
       handleClose();
-      await props.showAllUsers();
+      setPageCurrent(1);
+      await props.showAllUsers(1);
     }
   };
 

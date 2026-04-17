@@ -14,7 +14,8 @@ import {
 import __ from "lodash";
 
 const ModalUser = (props) => {
-  const { show, setShow, action, dataUpdate } = props;
+  const { show, setShow, action, dataUpdate, pageCurrent, setPageCurrent } =
+    props;
 
   const handleClose = () => {
     setShow(false);
@@ -107,7 +108,8 @@ const ModalUser = (props) => {
     if (res.EC === 0) {
       toast.success(res.EM);
       handleClose();
-      await props.showAllUsers();
+      setPageCurrent(1);
+      await props.showAllUsers(1);
     }
   };
 
@@ -125,7 +127,7 @@ const ModalUser = (props) => {
     if (res.EC === 0) {
       toast.success(res.EM);
       handleClose();
-      await props.showAllUsers();
+      await props.showAllUsers(pageCurrent);
     }
   };
 

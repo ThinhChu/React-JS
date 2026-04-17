@@ -3,9 +3,13 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 // import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function BasicExample() {
+  const navigate = useNavigate();
+  const handleLoginRouter = () => {
+    navigate("/login");
+  };
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -29,7 +33,9 @@ function BasicExample() {
               <NavDropdown.Item href="#action/3.2">Log out</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Profile</NavDropdown.Item>
             </NavDropdown> */}
-            <Button variant="primary">Đăng nhập</Button>
+            <Button variant="primary" onClick={() => handleLoginRouter()}>
+              Đăng nhập
+            </Button>
             <Button variant="outline-primary" className="ml-2">
               Đăng ký
             </Button>

@@ -10,6 +10,7 @@ import Admin from "./components/admin/Admin";
 import HomePage from "./components/home/HomePage";
 import Dashboard from "./components/admin/Dashboard";
 import ManageUsers from "./components/admin/users/ManageUsers";
+import Login from "./components/auth/Login";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,7 +20,9 @@ root.render(
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
           <Route path="user" element={<User />} />
+          <Route path="login" element={<Login />} />
         </Route>
+
         <Route path="admin" element={<Admin />}>
           <Route index element={<Dashboard />} />
           <Route path="manage-users" element={<ManageUsers />} />
