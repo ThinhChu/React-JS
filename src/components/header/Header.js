@@ -10,6 +10,9 @@ function BasicExample() {
   const handleLoginRouter = () => {
     navigate("/login");
   };
+  const handleRegisterRouter = () => {
+    navigate("/register");
+  };
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -36,7 +39,11 @@ function BasicExample() {
             <Button variant="primary" onClick={() => handleLoginRouter()}>
               Đăng nhập
             </Button>
-            <Button variant="outline-primary" className="ml-2">
+            <Button
+              variant="outline-primary"
+              onClick={() => handleRegisterRouter()}
+              className="ml-2"
+            >
               Đăng ký
             </Button>
           </Nav>

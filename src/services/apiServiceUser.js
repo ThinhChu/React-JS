@@ -40,6 +40,12 @@ const postLoginUser = (email, password) => {
   // {email : email, password : password}
 };
 
+const postRegisterUser = (email, username, password) => {
+  // Data
+  return axios.post("api/v1/register", { email, username, password });
+  // {email : email, password : password}
+};
+
 export {
   postCreateNewUser,
   getAllUsers,
@@ -47,4 +53,5 @@ export {
   deleteUser,
   getUsersWithPaginate,
   postLoginUser,
+  postRegisterUser,
 };
