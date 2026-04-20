@@ -46,6 +46,10 @@ const postRegisterUser = (email, username, password) => {
   // {email : email, password : password}
 };
 
+const postLogoutUser = (email, refresh_token) => {
+  return axios.post("api/v1/logout", { email, refresh_token });
+};
+
 export {
   postCreateNewUser,
   getAllUsers,
@@ -54,4 +58,5 @@ export {
   getUsersWithPaginate,
   postLoginUser,
   postRegisterUser,
+  postLogoutUser,
 };
