@@ -9,6 +9,8 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DetailQuiz from "./components/user/DetailQuiz";
+import NotFound from "./components/NotFound";
 
 const Layout = (props) => {
   return (
@@ -19,6 +21,9 @@ const Layout = (props) => {
           <Route path="user" element={<User />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="quiz/:id" element={<DetailQuiz />} />
+          {/* Catch-all route for 404 */}
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         <Route path="admin" element={<Admin />}>

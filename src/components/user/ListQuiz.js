@@ -19,7 +19,6 @@ const ListQuiz = (props) => {
     const res = await getQuizByUser();
     if (res && res.EC === 0) {
       setArrQuiz(res.DT);
-      console.log(res.DT);
     }
   };
 
@@ -29,8 +28,8 @@ const ListQuiz = (props) => {
         {arrQuiz &&
           arrQuiz.map((item, i) => {
             return (
-              <Col>
-                <Card key={`${i}-quiz`} col>
+              <Col key={`${i}-quiz`}>
+                <Card>
                   <Card.Img
                     variant="top"
                     src={`data:image/jpeg;base64, ${item.image}`}
