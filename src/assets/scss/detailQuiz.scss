@@ -1,0 +1,30 @@
+.q-container {
+  padding: 10px;
+  border: 1px black solid;
+  border-radius: 10px;
+  .q-title {
+    font-size: 25px;
+    font-weight: bold;
+  }
+  .q-img {
+    display: flex;
+    justify-content: center;
+  }
+  .q-content {
+    padding-block: 15px;
+    .title-q-by-quiz {
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+  .q-footer {
+    text-align: center;
+  }
+}
+
+.countdown-container {
+  padding: 10px;
+  border: 1px black solid;
+  border-radius: 10px;
+  height: 100%;
+}

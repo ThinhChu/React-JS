@@ -1,17 +1,47 @@
 import { useParams } from "react-router";
 import { getDetailQuestionByQuizId } from "../../services/apiQuestion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import _ from "lodash";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import "../../assets/scss/detailQuiz.scss";
+import Question from "./Question";
+// import img from "../../assets/img/preview.jpg";
 
 const DetailQuiz = () => {
   let params = useParams();
   const quizId = params.id;
+  const location = useLocation();
+  const image = location.state.image;
+  const description = location.state.description;
+  const [dataQuiz, setDataQuiz] = useState([]);
+  const [numberQuestion, setNumberQuestion] = useState(0);
 
   useEffect(() => {
-    getDetailQuestionQuiz();
+    getDetailQuestionQuiz(quizId);
   }, [quizId]);
 
-  const getDetailQuestionQuiz = async () => {
+  const handleNextQuestion = () => {
+    const nextNumberQuestion = +numberQuestion + 1;
+    if (nextNumberQuestion >= dataQuiz.length) {
+      alert("Đã hết question next");
+    } else {
+      setNumberQuestion(nextNumberQuestion);
+    }
+  };
+
+  const handlePrevQuestion = () => {
+    const prevNumberQuestion = +numberQuestion - 1;
+    if (prevNumberQuestion < 0) {
+      alert("Đã hết question prev");
+    } else {
+      setNumberQuestion(prevNumberQuestion);
+    }
+  };
+
+  const getDetailQuestionQuiz = async (quizId) => {
     const res = await getDetailQuestionByQuizId(quizId);
     if (res && res.EC === 0) {
       let data = res.DT;
@@ -32,13 +62,47 @@ const DetailQuiz = () => {
           return { questionId, questionDescription, questionImage, answers };
         })
         .value();
-      console.log(dataNew);
+      // console.log(dataNew);
+      setDataQuiz(dataNew);
     }
   };
 
   return (
     <>
-      <div>Detail Quiz {params.id}</div>
+      <div className="detail-quiz-container container mt-5">
+        <Row>
+          <Col sm={9}>
+            <div className="q-container">
+              <div className="q-title">Quiz 1: {description}</div>
+              <hr />
+              <div className="q-img">
+                <img
+                  width={`200`}
+                  alt="s"
+                  src={`data:image/jpeg;base64, ${image}`}
+                />
+              </div>
+              <div className="q-content">
+                <Question dataQuestion={dataQuiz[numberQuestion]} />
+              </div>
+              <div className="q-footer">
+                <Button
+                  variant="outline-secondary"
+                  onClick={handlePrevQuestion}
+                >
+                  Prev
+                </Button>
+                <Button className="ml-2" onClick={handleNextQuestion}>
+                  Next
+                </Button>
+              </div>
+            </div>
+          </Col>
+          <Col sm={3}>
+            <div className="countdown-container">countdown</div>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 };

@@ -5,10 +5,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { getQuizByUser } from "../../services/apiQuiz";
 import "../../assets/scss/listQuiz.scss";
-
+import { useNavigate } from "react-router-dom";
 const ListQuiz = (props) => {
   const [arrQuiz, setArrQuiz] = useState([]);
-
+  const navigate = useNavigate();
   // Khởi tạo useEffect khi sử dụng API (này là chạy 1 lần khi load trang)
   useEffect(() => {
     getQuiz();
@@ -37,7 +37,19 @@ const ListQuiz = (props) => {
                   <Card.Body>
                     <Card.Title>Quiz - {i + 1}</Card.Title>
                     <Card.Text>{item.description}</Card.Text>
-                    <Button variant="primary">Start now</Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        navigate(`/quiz/${item.id}`, {
+                          state: {
+                            image: item.image,
+                            description: item.description,
+                          },
+                        });
+                      }}
+                    >
+                      Start now
+                    </Button>
                   </Card.Body>
                 </Card>
               </Col>
