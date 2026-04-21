@@ -10,8 +10,8 @@ import {
 } from "../../../services/apiServiceUser";
 
 const ManageUsers = (props) => {
-  const LIMIT_USER = 2;
-  const [pageCount, setPageCount] = useState(0);
+  const LIMIT_USER = 3;
+  const [pageCount, setPageCount] = useState(1);
   const [pageCurrent, setPageCurrent] = useState(1);
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -83,7 +83,7 @@ const ManageUsers = (props) => {
   return (
     <>
       <div className="header-admin">
-        <h1>ManageUsers</h1>
+        <h1>Manage Users</h1>
         <Button
           variant="primary"
           className="ml-2"

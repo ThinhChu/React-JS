@@ -28,7 +28,9 @@ const CSidebar = (props) => {
             <MenuItem component={<Link to="/admin/manage-users" />}>
               Quản lý Users
             </MenuItem>
-            <MenuItem> Quản lý bài Quiz </MenuItem>
+            <MenuItem component={<Link to="/admin/manage-quizs" />}>
+              Quản lý bài Quiz
+            </MenuItem>
             <MenuItem> Quản lý câu hỏi </MenuItem>
           </SubMenu>
         </Menu>
