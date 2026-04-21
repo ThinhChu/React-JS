@@ -8,7 +8,8 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import "../../assets/scss/detailQuiz.scss";
 import Question from "./Question";
-// import img from "../../assets/img/preview.jpg";
+import { postSubmitQuiz } from "../../services/apiQuiz";
+import ModalQuiz from "./ModalQuiz";
 
 const DetailQuiz = () => {
   let params = useParams();
@@ -16,7 +17,9 @@ const DetailQuiz = () => {
   const location = useLocation();
   const image = location.state.image;
   const description = location.state.description;
+  const [show, setShow] = useState(false);
   const [dataQuiz, setDataQuiz] = useState([]);
+  const [dataSubmitQuiz, setDataSubmitQuiz] = useState([]);
   const [numberQuestion, setNumberQuestion] = useState(0);
 
   useEffect(() => {
@@ -57,13 +60,52 @@ const DetailQuiz = () => {
               questionDescription = item.description;
               questionImage = item.image;
             }
+            item.answers["isSelect"] = false;
             answers.push(item.answers);
           });
           return { questionId, questionDescription, questionImage, answers };
         })
         .value();
-      // console.log(dataNew);
       setDataQuiz(dataNew);
+    }
+  };
+
+  const handleCheckBox = (aId, qId) => {
+    // console.log(aId, qId);
+    let dataQuizClone = _.cloneDeep(dataQuiz);
+
+    let dataQuestion = dataQuizClone.find((item) => +item.questionId === +qId);
+
+    dataQuestion.answers = dataQuestion.answers.map((val, i) => {
+      if (val.id === aId) {
+        return { ...val, isSelect: !val.isSelect };
+      }
+      return val;
+    });
+    setDataQuiz(dataQuizClone);
+  };
+
+  const handleFinishQuiz = async () => {
+    const data = {
+      quizId: quizId,
+      answers: [],
+    };
+    let a = [];
+    dataQuiz.forEach((item) => {
+      let questionId = +item.questionId;
+      let b = [];
+      item.answers.forEach((item) => {
+        if (item.isSelect === true) {
+          b.push(item.id);
+        }
+      });
+      a.push({ questionId: questionId, userAnswerId: b });
+    });
+    data.answers = a;
+    let res = await postSubmitQuiz(data);
+    if (res && res.EC === 0) {
+      setShow(true);
+      setDataSubmitQuiz(res.DT);
     }
   };
 
@@ -83,7 +125,14 @@ const DetailQuiz = () => {
                 />
               </div>
               <div className="q-content">
-                <Question dataQuestion={dataQuiz[numberQuestion]} />
+                <Question
+                  dataQuestion={
+                    dataQuiz && dataQuiz[numberQuestion]
+                      ? dataQuiz[numberQuestion]
+                      : []
+                  }
+                  handleCheckBox={handleCheckBox}
+                />
               </div>
               <div className="q-footer">
                 <Button
@@ -92,16 +141,27 @@ const DetailQuiz = () => {
                 >
                   Prev
                 </Button>
-                <Button className="ml-2" onClick={handleNextQuestion}>
+                <Button className="mx-2" onClick={handleNextQuestion}>
                   Next
+                </Button>
+
+                <Button variant="warning" onClick={handleFinishQuiz}>
+                  Finish
                 </Button>
               </div>
             </div>
           </Col>
           <Col sm={3}>
-            <div className="countdown-container">countdown</div>
+            <div className="countdown-container">Countdown</div>
           </Col>
         </Row>
+        <ModalQuiz
+          show={show}
+          dataSubmitQuiz={dataSubmitQuiz}
+          data
+          size="xl"
+          setShow={setShow}
+        />
       </div>
     </>
   );

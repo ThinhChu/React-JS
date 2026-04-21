@@ -4,6 +4,10 @@ import Form from "react-bootstrap/Form";
 const Question = (props) => {
   const { dataQuestion } = props;
 
+  const handleChangeCheckbox = (e, aId, qId) => {
+    props.handleCheckBox(aId, qId);
+  };
+
   if (_.isEmpty(dataQuestion)) {
     return <></>;
   } else {
@@ -16,10 +20,17 @@ const Question = (props) => {
         <div className="list-item-q-by-quiz">
           {!_.isEmpty(dataQuestion.answers) &&
             dataQuestion.answers.map((val, key) => {
+              // console.log(val);
               return (
                 <div className="item-q-by-quiz" key={`question-${key}`}>
                   <Form.Check type={"checkbox"} id={`question-${key}`}>
-                    <Form.Check.Input type={"checkbox"} />
+                    <Form.Check.Input
+                      type={"checkbox"}
+                      checked={val.isSelect}
+                      onChange={(e, aId, qId) =>
+                        handleChangeCheckbox(e, val.id, dataQuestion.questionId)
+                      }
+                    />
                     <Form.Check.Label>{val.description}</Form.Check.Label>
                   </Form.Check>
                 </div>
