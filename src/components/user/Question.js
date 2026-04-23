@@ -13,6 +13,13 @@ const Question = (props) => {
   } else {
     return (
       <>
+        <div className="q-img">
+          <img
+            width={`200`}
+            alt="s"
+            src={`data:image/jpeg;base64, ${dataQuestion.questionImage}`}
+          />
+        </div>
         <div className="title-q-by-quiz">
           Question {dataQuestion.questionId} :{" "}
           {dataQuestion.questionDescription}

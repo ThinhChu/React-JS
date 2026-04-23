@@ -15,7 +15,7 @@ const DetailQuiz = () => {
   let params = useParams();
   const quizId = params.id;
   const location = useLocation();
-  const image = location.state.image;
+  // const image = location.state.image;
   const description = location.state.description;
   const [show, setShow] = useState(false);
   const [dataQuiz, setDataQuiz] = useState([]);
@@ -117,13 +117,7 @@ const DetailQuiz = () => {
             <div className="q-container">
               <div className="q-title">Quiz 1: {description}</div>
               <hr />
-              <div className="q-img">
-                <img
-                  width={`200`}
-                  alt="s"
-                  src={`data:image/jpeg;base64, ${image}`}
-                />
-              </div>
+
               <div className="q-content">
                 <Question
                   dataQuestion={
