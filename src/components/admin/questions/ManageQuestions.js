@@ -9,7 +9,10 @@ import { BsPatchMinus } from "react-icons/bs";
 import "../../../assets/scss/manageQuestions.scss";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
-import { getAllQuizForAdmin } from "../../../services/apiQuiz";
+import {
+  getAllQuizForAdmin,
+  getQuizWithQuestionAnswer,
+} from "../../../services/apiQuiz";
 import { toast } from "react-toastify";
 import { postCreateQuestion } from "../../../services/apiQuestion";
 import { postCreateQuestionByAnswers } from "../../../services/apiAnswer";
@@ -34,6 +37,7 @@ const ManageQuestions = (props) => {
   const [dataQuestions, setDataQuestions] = useState(dataDemo);
   const [dataQuizs, setDataQuizs] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   useEffect(() => {
     fetchAllDataQuizs();
@@ -223,6 +227,35 @@ const ManageQuestions = (props) => {
     );
   };
 
+  const handleChangeQuiz = async (e) => {
+    setSelectedQuiz(e);
+    const res = await getQuizWithQuestionAnswer(e.value);
+    if (res && res.EC === 0) {
+      let data = res.DT.qa.map((item) => {
+        return {
+          question_id: item.id,
+          description: item.description,
+          questionImage: item.imageFile,
+          questionFileImage: item.imageName,
+          answers: item.answers.map((val) => {
+            return {
+              answers_id: val.id,
+              description: val.description,
+              correct_answer: val.isCorrect,
+            };
+          }),
+        };
+      });
+      if (!_.isEmpty(data)) {
+        setDataQuestions(data);
+        setIsUpdate(true);
+      } else {
+        setDataQuestions(dataDemo);
+        setIsUpdate(false);
+      }
+    }
+  };
+
   return (
     <>
       <div className="header-admin">
@@ -236,7 +269,7 @@ const ManageQuestions = (props) => {
           <Select
             value={selectedQuiz}
             options={dataQuizs}
-            onChange={setSelectedQuiz}
+            onChange={(e) => handleChangeQuiz(e)}
           />
         </div>
         <div className="question-container mt-4">
@@ -381,12 +414,19 @@ const ManageQuestions = (props) => {
             )}
           </div>
           {!_.isEmpty(dataQuestions) && !_.isEmpty(dataQuestions[0].answers) ? (
-            <Button variant="primary" onClick={handleSubmitQuestion}>
-              Submit
-            </Button>
+            isUpdate ? (
+              <Button variant="primary" onClick={handleSubmitQuestion}>
+                Update
+              </Button>
+            ) : (
+              <Button variant="primary" onClick={handleSubmitQuestion}>
+                Submit
+              </Button>
+            )
           ) : (
             ""
           )}
+          {}
         </div>
       </div>
     </>

@@ -27,18 +27,20 @@ const TableQuizs = (props) => {
                   <td>{item.description}</td>
                   <td>{item.difficulty}</td>
                   <td>
-                    <Button
-                      variant="warning mx-2"
-                      onClick={() => props.handleUpdateQuiz(item.id)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => props.handleDeleteQuiz(item.id)}
-                    >
-                      Delete
-                    </Button>
+                    <div className="d-flex">
+                      <Button
+                        variant="warning mx-2"
+                        onClick={() => props.handleUpdateQuiz(item.id)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => props.handleDeleteQuiz(item.id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               );

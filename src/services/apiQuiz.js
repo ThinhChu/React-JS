@@ -47,6 +47,14 @@ const getQuizById = (id) => {
   return axios.get(`api/v1/quiz/${id}`);
 };
 
+const postQuizAssignToUser = (quizId, userId) => {
+  return axios.post("api/v1/quiz-assign-to-user", { quizId, userId });
+};
+
+const getQuizWithQuestionAnswer = (quizId) => {
+  return axios.get(`api/v1/quiz-with-qa/${quizId}`);
+};
+
 export {
   getQuizByUser,
   postSubmitQuiz,
@@ -55,4 +63,6 @@ export {
   deleteQuizById,
   updateQuizById,
   getQuizById,
+  postQuizAssignToUser,
+  getQuizWithQuestionAnswer,
 };
