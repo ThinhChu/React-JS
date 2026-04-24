@@ -1,33 +1,40 @@
-.group-question-item {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-  .form-floating {
-    width: 100%;
+.quiz-container {
+  .select-quiz-container {
+    .css-b62m3t-container {
+      z-index: 999;
+    }
   }
-  .upload-image {
+  .group-question-item {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    cursor: pointer;
-    span {
-      white-space: nowrap;
+    gap: 25px;
+    .form-floating {
+      width: 100%;
     }
-  }
-  .action-question {
-    display: flex;
-    gap: 10px;
-    svg {
+    .upload-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       cursor: pointer;
+      span {
+        white-space: nowrap;
+      }
+    }
+    .action-question {
+      display: flex;
+      gap: 10px;
+      svg {
+        cursor: pointer;
+      }
     }
   }
-}
 
-svg {
-  font-size: 24px;
-}
+  svg {
+    font-size: 24px;
+  }
 
-.pl-2 {
-  padding-left: 2rem;
+  .pl-2 {
+    padding-left: 2rem;
+  }
 }

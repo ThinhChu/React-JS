@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { LuImagePlus } from "react-icons/lu";
 import { BsFillPatchPlusFill } from "react-icons/bs";
@@ -8,68 +9,47 @@ import { BsPatchMinus } from "react-icons/bs";
 import "../../../assets/scss/manageQuestions.scss";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
+import { getAllQuizForAdmin } from "../../../services/apiQuiz";
+import { toast } from "react-toastify";
+import { postCreateQuestion } from "../../../services/apiQuestion";
+import { postCreateQuestionByAnswers } from "../../../services/apiAnswer";
 
 const ManageQuestions = (props) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [dataQuestions, setDataQuestions] = useState([]);
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+  const dataDemo = [
+    {
+      question_id: uuidv4(),
+      description: "",
+      questionImage: "",
+      questionFileImage: "",
+      answers: [
+        {
+          answers_id: uuidv4(),
+          description: "",
+          correct_answer: false,
+        },
+      ],
+    },
   ];
+  const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const [dataQuestions, setDataQuestions] = useState(dataDemo);
+  const [dataQuizs, setDataQuizs] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    fetchDataQuestions();
+    fetchAllDataQuizs();
   }, []);
 
-  const fetchDataQuestions = () => {
-    const dataDemo = [
-      {
-        question_id: uuidv4(),
-        description: "description",
-        questionImage: "aaffs.png",
-        answers: [
-          {
-            answers_id: uuidv4(),
-            description: "Câu trả lời 1",
-            correct_answer: false,
-          },
-          {
-            answers_id: uuidv4(),
-            description: "Câu trả lời 2",
-            correct_answer: true,
-          },
-          {
-            answers_id: uuidv4(),
-            description: "Câu trả lời 3",
-            correct_answer: false,
-          },
-        ],
-      },
-      {
-        question_id: uuidv4(),
-        description: "description 2",
-        questionImage: "aaffs.png",
-        answers: [
-          {
-            answers_id: uuidv4(),
-            description: "Câu trả lời q2 1",
-            correct_answer: false,
-          },
-          {
-            answers_id: uuidv4(),
-            description: "Câu trả lời q2 2",
-            correct_answer: false,
-          },
-          {
-            answers_id: uuidv4(),
-            description: "Câu trả lời q2 3",
-            correct_answer: false,
-          },
-        ],
-      },
-    ];
-    setDataQuestions(dataDemo);
+  const fetchAllDataQuizs = async () => {
+    let res = await getAllQuizForAdmin();
+    if (res && res.EC === 0) {
+      const dataSelectQuiz = res.DT.map((item) => {
+        return {
+          value: item.id,
+          label: item.id + " - " + item.name,
+        };
+      });
+      setDataQuizs(dataSelectQuiz);
+    }
   };
 
   const handleActionAddRemoveQuestion = (type, id) => {
@@ -125,19 +105,138 @@ const ManageQuestions = (props) => {
     }
   };
 
+  const handleOnChangeQuestions = (qId, value) => {
+    let dataClone = _.cloneDeep(dataQuestions);
+    let index = dataClone.findIndex((item) => item.question_id === qId);
+    dataClone[index].description = value;
+    setDataQuestions(dataClone);
+  };
+
+  const handleOnChangeFileQuestions = (qId, value) => {
+    let dataClone = _.cloneDeep(dataQuestions);
+    let index = dataClone.findIndex((item) => item.question_id === qId);
+    dataClone[index].questionFileImage = value;
+    dataClone[index].questionImage = value.name;
+    setDataQuestions(dataClone);
+  };
+
+  const handleOnChangeAnswer = (type, qId, aId, value) => {
+    let dataClone = _.cloneDeep(dataQuestions);
+    let index = dataClone.findIndex((item) => item.question_id === qId);
+    dataClone[index].answers = dataClone[index].answers.map((item) => {
+      if (item.answers_id === aId) {
+        if (type === "CHECKBOX") {
+          item.correct_answer = value;
+        } else if (type === "INPUT") {
+          item.description = value;
+        }
+      }
+      return item;
+    });
+    setDataQuestions(dataClone);
+  };
+
+  const handleSubmitQuestion = async () => {
+    // Validate
+    //Quiz
+    if (_.isEmpty(selectedQuiz)) {
+      toast.error("Not empty Quiz");
+      return;
+    }
+    setIsSubmitted(true);
+
+    // Answer
+    let isValidA = true;
+    let isCorrectA = true;
+    let idA = 0;
+    let idQs = 0;
+    if (!_.isEmpty(dataQuestions)) {
+      for (let index = 0; index < dataQuestions.length; index++) {
+        for (let i = 0; i < dataQuestions[index].answers.length; i++) {
+          if (dataQuestions[index].answers[i].description === "") {
+            isValidA = false;
+            idA = i;
+            idQs = index;
+            break;
+          }
+        }
+        let indexCorrect = dataQuestions[index].answers.findIndex(
+          (item) => item.correct_answer === true,
+        );
+
+        if (indexCorrect === -1) {
+          isCorrectA = false;
+          idQs = index;
+          break;
+        }
+      }
+    }
+    if (isValidA === false) {
+      toast.error(
+        `Not empty description Answer ${idA + 1}, Question ${idQs + 1}`,
+      );
+      return;
+    }
+    if (isCorrectA === false) {
+      toast.error(
+        `There must be a correct answer to the question ${idQs + 1} `,
+      );
+      return;
+    }
+
+    // Questions
+    let isValidQ = true;
+    let idQ = 0;
+    if (!_.isEmpty(dataQuestions)) {
+      for (let index = 0; index < dataQuestions.length; index++) {
+        if (dataQuestions[index].description === "") {
+          isValidQ = false;
+          idQ = index;
+          break;
+        }
+      }
+    }
+    if (isValidQ === false) {
+      toast.error(`Not empty description Question ${idQ + 1}`);
+      return;
+    }
+
+    //Submit
+    await Promise.all(
+      dataQuestions.map(async (item) => {
+        const resQ = await postCreateQuestion(
+          +selectedQuiz.value,
+          item.description,
+          item.questionImage,
+        );
+        await Promise.all(
+          item.answers.map(async (val) => {
+            const resA = await postCreateQuestionByAnswers(
+              resQ.DT.id,
+              val.description,
+              val.correct_answer,
+            );
+            console.log("check res >>>", resA);
+          }),
+        );
+      }),
+    );
+  };
+
   return (
     <>
       <div className="header-admin">
         <h1>Manage Question</h1>
       </div>
       <hr />
+
       <div className="quiz-container pt-3">
         <div className="select-quiz-container" style={{ width: 350 }}>
           <div className="title-label mb-2">Select Quiz:</div>
           <Select
-            value={selectedOption}
-            options={options}
-            onChange={setSelectedOption}
+            value={selectedQuiz}
+            options={dataQuizs}
+            onChange={setSelectedQuiz}
           />
         </div>
         <div className="question-container mt-4">
@@ -153,22 +252,43 @@ const ManageQuestions = (props) => {
                         key={item.question_id}
                       >
                         <Form.Group className="mb-3 group-question-item">
-                          <FloatingLabel label="Question description">
+                          <FloatingLabel
+                            label={"Question description " + (key + 1)}
+                          >
                             <Form.Control
                               type="text"
-                              defaultValue={item.description}
                               value={item.description}
+                              isInvalid={isSubmitted && !item.description}
+                              onChange={(e) =>
+                                handleOnChangeQuestions(
+                                  item.question_id,
+                                  e.target.value,
+                                )
+                              }
                             />
                           </FloatingLabel>
-                          <div className="upload-image">
+                          <label
+                            className="upload-image"
+                            htmlFor={item.question_id}
+                          >
                             <LuImagePlus />
-                            <span>Upload file</span>
+                            <span>
+                              {item.questionImage
+                                ? item.questionImage
+                                : "Upload file"}
+                            </span>
                             <Form.Control
                               type="file"
-                              disabled
-                              style={{ display: "none" }}
+                              id={item.question_id}
+                              hidden
+                              onChange={(e) =>
+                                handleOnChangeFileQuestions(
+                                  item.question_id,
+                                  e.target.files[0],
+                                )
+                              }
                             />
-                          </div>
+                          </label>
                           <div className="action-question">
                             <BsFillPatchPlusFill
                               style={{ color: "#3483ff" }}
@@ -196,14 +316,32 @@ const ManageQuestions = (props) => {
                                   <Form.Group className="mb-3 group-question-item pl-2">
                                     <Form.Check
                                       type="checkbox"
-                                      defaultChecked={val.correct_answer}
+                                      // defaultChecked={val.correct_answer}
                                       checked={val.correct_answer}
+                                      onChange={(e) =>
+                                        handleOnChangeAnswer(
+                                          "CHECKBOX",
+                                          item.question_id,
+                                          val.answers_id,
+                                          e.target.checked,
+                                        )
+                                      }
                                     />
-                                    <FloatingLabel label="Answers">
+                                    <FloatingLabel label={"Answers " + (i + 1)}>
                                       <Form.Control
                                         type="text"
-                                        defaultValue={val.description}
+                                        isInvalid={
+                                          isSubmitted && !val.description
+                                        }
                                         value={val.description}
+                                        onChange={(e) =>
+                                          handleOnChangeAnswer(
+                                            "INPUT",
+                                            item.question_id,
+                                            val.answers_id,
+                                            e.target.value,
+                                          )
+                                        }
                                       />
                                     </FloatingLabel>
                                     <div className="action-question">
@@ -242,6 +380,13 @@ const ManageQuestions = (props) => {
               </Form>
             )}
           </div>
+          {!_.isEmpty(dataQuestions) && !_.isEmpty(dataQuestions[0].answers) ? (
+            <Button variant="primary" onClick={handleSubmitQuestion}>
+              Submit
+            </Button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </>
