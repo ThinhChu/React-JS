@@ -8,10 +8,11 @@ import { BsFillPatchPlusFill } from "react-icons/bs";
 import { BsPatchMinus } from "react-icons/bs";
 import "../../../assets/scss/manageQuestions.scss";
 import { v4 as uuidv4 } from "uuid";
-import _ from "lodash";
+import _, { isObject } from "lodash";
 import {
   getAllQuizForAdmin,
   getQuizWithQuestionAnswer,
+  postUpsertQuizWithQA,
 } from "../../../services/apiQuiz";
 import { toast } from "react-toastify";
 import { postCreateQuestion } from "../../../services/apiQuestion";
@@ -73,8 +74,8 @@ const ManageQuestions = (props) => {
       setDataQuestions([...dataQuestions, dataNewQuestions]);
     } else if (type === "DELETE") {
       let dataClone = _.cloneDeep(dataQuestions);
-      let c = dataClone.find((item) => item.question_id !== id);
-      setDataQuestions([c]);
+      let c = dataClone.filter((item) => item.question_id !== id);
+      setDataQuestions(c);
     }
   };
 
@@ -140,15 +141,14 @@ const ManageQuestions = (props) => {
     setDataQuestions(dataClone);
   };
 
-  const handleSubmitQuestion = async () => {
+  const validateQuiz = () => {
     // Validate
     //Quiz
     if (_.isEmpty(selectedQuiz)) {
       toast.error("Not empty Quiz");
-      return;
+      return false;
     }
     setIsSubmitted(true);
-
     // Answer
     let isValidA = true;
     let isCorrectA = true;
@@ -179,15 +179,14 @@ const ManageQuestions = (props) => {
       toast.error(
         `Not empty description Answer ${idA + 1}, Question ${idQs + 1}`,
       );
-      return;
+      return false;
     }
     if (isCorrectA === false) {
       toast.error(
         `There must be a correct answer to the question ${idQs + 1} `,
       );
-      return;
+      return false;
     }
-
     // Questions
     let isValidQ = true;
     let idQ = 0;
@@ -202,41 +201,59 @@ const ManageQuestions = (props) => {
     }
     if (isValidQ === false) {
       toast.error(`Not empty description Question ${idQ + 1}`);
-      return;
+      return false;
     }
+    return true;
+  };
 
-    //Submit
-    await Promise.all(
-      dataQuestions.map(async (item) => {
-        const resQ = await postCreateQuestion(
-          +selectedQuiz.value,
-          item.description,
-          item.questionImage,
-        );
-        await Promise.all(
-          item.answers.map(async (val) => {
-            const resA = await postCreateQuestionByAnswers(
-              resQ.DT.id,
-              val.description,
-              val.correct_answer,
+  const handleSubmitQuestion = async () => {
+    //Validate
+    let check = validateQuiz();
+    if (check) {
+      //Submit
+      await Promise.all(
+        dataQuestions.map(async (item) => {
+          const resQ = await postCreateQuestion(
+            +selectedQuiz.value,
+            item.description,
+            item.questionFileImage,
+          );
+          if (resQ && resQ.EC === 0) {
+            await Promise.all(
+              item.answers.map(async (val) => {
+                const resA = await postCreateQuestionByAnswers(
+                  resQ.DT.id,
+                  val.description,
+                  val.correct_answer,
+                );
+                if (!resA || resA.EC !== 0) {
+                  toast.error(resA.EM);
+                  return;
+                } else {
+                }
+              }),
             );
-            console.log("check res >>>", resA);
-          }),
-        );
-      }),
-    );
+          } else {
+            toast.error(resQ.EM);
+            return;
+          }
+        }),
+      );
+      toast.success("Finish confirm Questions and Answers");
+    }
   };
 
   const handleChangeQuiz = async (e) => {
     setSelectedQuiz(e);
     const res = await getQuizWithQuestionAnswer(e.value);
     if (res && res.EC === 0) {
+      console.log(res.DT.qa);
       let data = res.DT.qa.map((item) => {
         return {
           question_id: item.id,
           description: item.description,
-          questionImage: item.imageFile,
-          questionFileImage: item.imageName,
+          questionImage: item.imageName,
+          questionFileImage: item.imageFile,
           answers: item.answers.map((val) => {
             return {
               answers_id: val.id,
@@ -252,6 +269,71 @@ const ManageQuestions = (props) => {
       } else {
         setDataQuestions(dataDemo);
         setIsUpdate(false);
+      }
+    }
+  };
+
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const handleUpdateQuizWithQA = async () => {
+    //Validate
+    let check = validateQuiz();
+    if (check) {
+      //Submit
+      let data = await Promise.all(
+        _.cloneDeep(dataQuestions).map(async (item) => {
+          let base64 = "";
+          if (
+            isObject(item.questionFileImage) &&
+            item.questionFileImage !== ""
+          ) {
+            base64 = await fileToBase64(item.questionFileImage);
+          } else {
+            base64 = item.questionFileImage
+              ? `data:image/png;base64,${item.questionFileImage}`
+              : "";
+          }
+
+          return {
+            id: item.question_id,
+            description: item.description,
+            imageName: item.questionImage,
+            imageFile: base64,
+            answers: item.answers.map((val) => {
+              return {
+                id: val.answers_id,
+                description: val.description,
+                isCorrect: val.correct_answer,
+              };
+            }),
+          };
+        }),
+      );
+
+      let dataUpsert = {
+        quizId: selectedQuiz.value,
+        questions: data,
+      };
+
+      let res = await postUpsertQuizWithQA(dataUpsert);
+      if (res && res.EC === 0) {
+        toast.success(res.EM);
+      } else {
+        toast.error(res.EM);
       }
     }
   };
@@ -415,7 +497,7 @@ const ManageQuestions = (props) => {
           </div>
           {!_.isEmpty(dataQuestions) && !_.isEmpty(dataQuestions[0].answers) ? (
             isUpdate ? (
-              <Button variant="primary" onClick={handleSubmitQuestion}>
+              <Button variant="primary" onClick={handleUpdateQuizWithQA}>
                 Update
               </Button>
             ) : (
