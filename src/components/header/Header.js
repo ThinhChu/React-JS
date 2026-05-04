@@ -8,6 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { postLogoutUser } from "../../services/apiServiceUser";
 import { useDispatch } from "react-redux";
 import { doLogout } from "../../redux/action/userAction";
+import Language from "./Language";
 
 function BasicExample() {
   const account = useSelector((state) => state.account.account);
@@ -68,10 +69,7 @@ function BasicExample() {
                 </Button>
               </>
             )}
-            <NavDropdown title="Viet Nam" id="basic-nav-dropdown">
-              <NavDropdown.Item>Viet Nam</NavDropdown.Item>
-              <NavDropdown.Item>English</NavDropdown.Item>
-            </NavDropdown>
+            <Language />
           </Nav>
         </Navbar.Collapse>
       </Container>
