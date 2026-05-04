@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 
 const Question = (props) => {
   const { dataQuestion } = props;
-  console.log(dataQuestion);
+  // console.log(dataQuestion);
 
   const handleChangeCheckbox = (e, aId, qId) => {
     props.handleCheckBox(aId, qId);

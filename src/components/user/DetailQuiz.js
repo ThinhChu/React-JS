@@ -10,6 +10,7 @@ import "../../assets/scss/detailQuiz.scss";
 import Question from "./Question";
 import { postSubmitQuiz } from "../../services/apiQuiz";
 import ModalQuiz from "./ModalQuiz";
+import RightContentQuiz from "./RightContentQuiz";
 
 const DetailQuiz = () => {
   let params = useParams();
@@ -146,7 +147,10 @@ const DetailQuiz = () => {
             </div>
           </Col>
           <Col sm={3}>
-            <div className="countdown-container">Countdown</div>
+            <RightContentQuiz
+              dataQuiz={dataQuiz}
+              handleFinishQuiz={handleFinishQuiz}
+            />
           </Col>
         </Row>
         <ModalQuiz

@@ -16,6 +16,10 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
+      border: 1px black solid;
+      padding: 10px 15px;
+      border-radius: 10px;
+      height: 3rem;
       cursor: pointer;
       span {
         white-space: nowrap;
@@ -26,6 +30,16 @@
       gap: 10px;
       svg {
         cursor: pointer;
+      }
+    }
+    .box-upload-image {
+      display: flex;
+      column-gap: 10px;
+      align-items: center;
+      .image-demo {
+        img {
+          width: 4rem;
+        }
       }
     }
   }

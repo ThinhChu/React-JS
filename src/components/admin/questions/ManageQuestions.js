@@ -117,11 +117,13 @@ const ManageQuestions = (props) => {
     setDataQuestions(dataClone);
   };
 
-  const handleOnChangeFileQuestions = (qId, value) => {
+  const handleOnChangeFileQuestions = async (qId, value) => {
     let dataClone = _.cloneDeep(dataQuestions);
     let index = dataClone.findIndex((item) => item.question_id === qId);
-    dataClone[index].questionFileImage = value;
+    dataClone[index].questionFileImage = await fileToBase64(value);
     dataClone[index].questionImage = value.name;
+    console.log(dataClone);
+
     setDataQuestions(dataClone);
   };
 
@@ -280,7 +282,12 @@ const ManageQuestions = (props) => {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        resolve(reader.result);
+        const result = reader.result;
+
+        // 👉 bỏ prefix
+        const base64 = result.split(",")[1];
+
+        resolve(base64);
       };
 
       reader.onerror = (error) => {
@@ -303,10 +310,10 @@ const ManageQuestions = (props) => {
           ) {
             base64 = await fileToBase64(item.questionFileImage);
           } else {
-            base64 = item.questionFileImage
-              ? `data:image/png;base64,${item.questionFileImage}`
-              : "";
+            base64 = item.questionFileImage ? `${item.questionFileImage}` : "";
           }
+
+          base64 = `data:image/png;base64, ${base64}`;
 
           return {
             id: item.question_id,
@@ -361,6 +368,8 @@ const ManageQuestions = (props) => {
               <Form>
                 <div className="container-question">
                   {dataQuestions.map((item, key) => {
+                    let image = `data:image/png;base64,${item.questionFileImage}`;
+
                     return (
                       <div
                         className="container-question-item"
@@ -382,28 +391,32 @@ const ManageQuestions = (props) => {
                               }
                             />
                           </FloatingLabel>
-                          <label
-                            className="upload-image"
-                            htmlFor={item.question_id}
-                          >
-                            <LuImagePlus />
-                            <span>
-                              {item.questionImage
-                                ? item.questionImage
-                                : "Upload file"}
-                            </span>
-                            <Form.Control
-                              type="file"
-                              id={item.question_id}
-                              hidden
-                              onChange={(e) =>
-                                handleOnChangeFileQuestions(
-                                  item.question_id,
-                                  e.target.files[0],
-                                )
-                              }
-                            />
-                          </label>
+                          <div className="box-upload-image">
+                            {image && item.questionFileImage && (
+                              <div className="image-demo">
+                                <img src={image} alt={item.questionImage} />
+                              </div>
+                            )}
+
+                            <label
+                              className="upload-image"
+                              htmlFor={item.question_id}
+                            >
+                              <LuImagePlus />
+                              <span>Upload file</span>
+                              <Form.Control
+                                type="file"
+                                id={item.question_id}
+                                hidden
+                                onChange={(e) =>
+                                  handleOnChangeFileQuestions(
+                                    item.question_id,
+                                    e.target.files[0],
+                                  )
+                                }
+                              />
+                            </label>
+                          </div>
                           <div className="action-question">
                             <BsFillPatchPlusFill
                               style={{ color: "#3483ff" }}
