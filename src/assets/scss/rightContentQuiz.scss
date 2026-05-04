@@ -28,7 +28,8 @@
       cursor: pointer;
       transition: all 0.3s;
       &:hover,
-      &.active {
+      &.active,
+      &.isSelected {
         background-color: #ccc;
         border: 1px solid #ccc;
         color: white;
