@@ -45,6 +45,10 @@ const DetailQuiz = () => {
     }
   };
 
+  const handleChangeQuestion = (number) => {
+    setNumberQuestion(number);
+  };
+
   const getDetailQuestionQuiz = async (quizId) => {
     const res = await getDetailQuestionByQuizId(quizId);
     if (res && res.EC === 0) {
@@ -150,6 +154,8 @@ const DetailQuiz = () => {
             <RightContentQuiz
               dataQuiz={dataQuiz}
               handleFinishQuiz={handleFinishQuiz}
+              numberQuestion={numberQuestion}
+              handleChangeQuestion={handleChangeQuestion}
             />
           </Col>
         </Row>
