@@ -30,6 +30,7 @@ function BasicExample() {
       navigate("/login");
     }
   };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
