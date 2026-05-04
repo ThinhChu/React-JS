@@ -68,6 +68,10 @@ function BasicExample() {
                 </Button>
               </>
             )}
+            <NavDropdown title="Viet Nam" id="basic-nav-dropdown">
+              <NavDropdown.Item>Viet Nam</NavDropdown.Item>
+              <NavDropdown.Item>English</NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
