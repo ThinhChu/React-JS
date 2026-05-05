@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const TimeOut = (props) => {
   const [count, setCount] = useState(300);
+  const { timeUp } = props;
   const formatTime = (seconds) => {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
@@ -11,7 +12,7 @@ const TimeOut = (props) => {
   };
   useEffect(() => {
     if (count === 0) {
-      props.timeUp();
+      timeUp();
       return;
     }
 
@@ -21,7 +22,7 @@ const TimeOut = (props) => {
     return () => {
       clearInterval(timer);
     };
-  }, [count]);
+  }, [count, timeUp]);
   return <div>{formatTime(count)}</div>;
 };
 

@@ -1,0 +1,31 @@
+.dashboard-container {
+  .heading-dashboard {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  .info-number-dashboard-container {
+    margin-top: 1.5rem;
+    .box-info-number {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .item-info-number {
+        width: calc(25% - 10px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 15px;
+        border: 1px #ccc solid;
+        border-radius: 10px;
+        .title-info-number {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .chart-container {
+    margin-top: 1.5rem;
+  }
+}
