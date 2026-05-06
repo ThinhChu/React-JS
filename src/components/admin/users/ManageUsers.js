@@ -8,6 +8,7 @@ import {
   // getAllUsers,
   getUsersWithPaginate,
 } from "../../../services/apiServiceUser";
+import { useTranslation } from "react-i18next";
 
 const ManageUsers = (props) => {
   const LIMIT_USER = 3;
@@ -17,6 +18,7 @@ const ManageUsers = (props) => {
   const [showDelete, setShowDelete] = useState(false);
   const [action, setAction] = useState("create");
   const [dataUpdateUser, setDataUpdateUser] = useState([]);
+  const { t } = useTranslation();
 
   const handleShow = (act) => {
     setShow(true);
@@ -83,13 +85,13 @@ const ManageUsers = (props) => {
   return (
     <>
       <div className="header-admin">
-        <h1>Manage Users</h1>
+        <h1>{t("admin.user.title")}</h1>
         <Button
           variant="primary"
           className="ml-2"
           onClick={() => handleShow("create")}
         >
-          Thêm mới
+          {t("admin.user.t-button-add")}
         </Button>
         <ModalUser
           show={show}

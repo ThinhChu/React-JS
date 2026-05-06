@@ -3,5 +3,100 @@
         "title": "Ứng dụng có nhiều ngôn ngữ",
         "description": "Được hỗ trợ bởi hơn một thập kỷ kinh nghiệm, Typeform AI giúp bạn xây dựng các biểu mẫu có phương pháp thực hành tốt nhất, được thiết kế chuyên nghiệp đã được chứng minh là nhận được nhiều phản hồi hơn.",
         "button": "Xem thêm"
+    },
+    "admin": {
+        "dashboard": {
+            "title": "Bảng điều khiển",
+            "t-user": "Thành viên",
+            "t-quiz": "Bài tập",
+            "t-question": "Câu hỏi",
+            "t-answer": "Đáp án",
+            "t-total": "Tổng"
+        },
+        "sidebar": {
+            "t-dashboard": "Bảng điều khiển",
+            "t-feature": "Tính năng",
+            "t-manage-user": "Quản lý thành viên",
+            "t-manage-quiz": "Quản lý bài tập",
+            "t-manage-question": "Quản lý đáp án"
+        },
+        "user": {
+            "title": "Quản lý thành viên",
+            "t-button-add": "Thêm mới",
+            "t-user-table": "Tên",
+            "t-role-table": "Vai trò",
+            "t-action-table": "Hành động",
+            "t-action-view-table": "Xem",
+            "t-action-edit-table": "Sửa",
+            "t-action-delete-table": "Xóa",
+            "t-not-table": "Chưa có nội dung",
+            "t-prev-table": "< Về",
+            "t-next-table": "Tiến >",
+            "t-add-model": "Thêm mới thành viên",
+            "t-update-model": "Cập nhật thành viên",
+            "t-view-model": "Xem thành viên",
+            "t-password": "Mật khẩu",
+            "t-image": "Hình ảnh đại diện",
+            "t-up-image": "Tải anh lên",
+            "t-enter": "Nhập",
+            "t-choose": "Chọn",
+            "t-close": "Đóng",
+            "t-save": "Lưu",
+            "t-delete-model": "Xóa thành viên",
+            "d-delete-model": "Bạn chắc sẽ xóa thành viên với email là:",
+            "t-confirm": "Xác nhận"
+        },
+        "quiz": {
+            "t-name": "Tên",
+            "t-desc": "Mô tả",
+            "t-content": "Nội dung",
+            "t-quiz-type": "Loại bài tập",
+            "t-quiz-thumb": "Hình ảnh bài tập",
+            "t-submit": "Gửi",
+            "t-update": "Cập nhật",
+            "t-assign": "Gán bài tập cho người dùng",
+            "t-btn-assign": "Gán",
+            "t-difficulty": "Độ khó"
+        },
+        "question": {
+            "t-select-quiz": "Chọn bài tập",
+            "t-add-question": "Thêm câu hỏi",
+            "t-q-desc": "Mô tả câu hỏi",
+            "t-up-file": "Tải file lên",
+            "t-a-desc": "Mô tả câu trả lời"
+        }
+    },
+    "header": {
+        "t-home": "Trang chủ",
+        "t-user": "Người dùng",
+        "t-admin": "Quản trị",
+        "t-profile": "Hồ sơ",
+        "t-logout": "Đăng xuất",
+        "t-signup": "Đăng ký",
+        "t-login": "Đăng nhập"
+    },
+    "login": {
+        "t-desc": "Tiếp tục xây dựng biểu mẫu, thu thập phản hồi và tự động hóa quy trình công việc của bạn.",
+        "t-account": "Địa chỉ email",
+        "t-forget-password": "Quên mật khẩu"
+    },
+    "register": {
+        "t-desc": "Tiếp tục xây dựng biểu mẫu, thu thập phản hồi và tự động hóa quy trình công việc của bạn.",
+        "t-register": "Đăng ký"
+    },
+    "quiz": {
+        "t-quiz": "Bài tập",
+        "t-btn-s": "Bắt đầu ngay",
+        "t-prev": "Lùi",
+        "t-next": "Tiến",
+        "t-finish": "Hoàn thành",
+        "t-title-modal": "Kết quả bài tập của bạn",
+        "t-countCorrect": "Số câu đúng",
+        "t-countTotal": "Tổng số câu"
+    },
+    "404": {
+        "title": "404 Không có dữ liệu",
+        "desc": "Ồ vâng, bạn đã đọc thành công thông báo cảnh báo quan trọng này. Văn bản mẫu này sẽ dài hơn một chút để bạn có thể thấy khoảng cách trong cảnh báo hoạt động như thế nào với loại nội dung này.",
+        "desc-2": "Bất cứ khi nào bạn cần, hãy nhớ sử dụng các tiện ích ký quỹ để giữ mọi thứ đẹp đẽ và gọn gàng."
     }
 }

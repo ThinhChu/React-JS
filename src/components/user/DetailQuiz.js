@@ -11,6 +11,7 @@ import Question from "./Question";
 import { postSubmitQuiz } from "../../services/apiQuiz";
 import ModalQuiz from "./ModalQuiz";
 import RightContentQuiz from "./RightContentQuiz";
+import { useTranslation } from "react-i18next";
 
 const DetailQuiz = () => {
   let params = useParams();
@@ -22,6 +23,7 @@ const DetailQuiz = () => {
   const [dataQuiz, setDataQuiz] = useState([]);
   const [dataSubmitQuiz, setDataSubmitQuiz] = useState([]);
   const [numberQuestion, setNumberQuestion] = useState(0);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getDetailQuestionQuiz(quizId);
@@ -120,7 +122,9 @@ const DetailQuiz = () => {
         <Row>
           <Col sm={9}>
             <div className="q-container">
-              <div className="q-title">Quiz 1: {description}</div>
+              <div className="q-title">
+                {t("quiz.t-quiz") + " 1: " + description}
+              </div>
               <hr />
 
               <div className="q-content">
@@ -138,14 +142,14 @@ const DetailQuiz = () => {
                   variant="outline-secondary"
                   onClick={handlePrevQuestion}
                 >
-                  Prev
+                  {t("quiz.t-prev")}
                 </Button>
                 <Button className="mx-2" onClick={handleNextQuestion}>
-                  Next
+                  {t("quiz.t-next")}
                 </Button>
 
                 <Button variant="warning" onClick={handleFinishQuiz}>
-                  Finish
+                  {t("quiz.t-finish")}
                 </Button>
               </div>
             </div>

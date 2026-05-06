@@ -1,19 +1,15 @@
 import Alert from "react-bootstrap/Alert";
+import { useTranslation } from "react-i18next";
 
 const NotFound = (props) => {
+  const { t } = useTranslation();
+
   return (
     <Alert variant="success" className="mt-5 container">
-      <Alert.Heading>404 Not Found</Alert.Heading>
-      <p>
-        Aww yeah, you successfully read this important alert message. This
-        example text is going to run a bit longer so that you can see how
-        spacing within an alert works with this kind of content.
-      </p>
+      <Alert.Heading>{t("404.title")}</Alert.Heading>
+      <p>{t("404.desc")}</p>
       <hr />
-      <p className="mb-0">
-        Whenever you need to, be sure to use margin utilities to keep things
-        nice and tidy.
-      </p>
+      <p className="mb-0">{t("404.desc-2")}</p>
     </Alert>
   );
 };

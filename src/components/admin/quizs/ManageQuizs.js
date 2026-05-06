@@ -15,6 +15,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Select from "react-select";
 import _ from "lodash";
 import { getAllUsers } from "../../../services/apiServiceUser";
+import { useTranslation } from "react-i18next";
 
 const ManageQuizs = (props) => {
   const [nameQuiz, setNameQuiz] = useState();
@@ -29,6 +30,8 @@ const ManageQuizs = (props) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [dataQuizAssign, setDataQuizAssign] = useState([]);
   const [dataUserAssign, setDataUserAssign] = useState([]);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchAllDataQuizs();
@@ -146,16 +149,16 @@ const ManageQuizs = (props) => {
   return (
     <>
       <div className="header-admin">
-        <h1>Manage Quizs</h1>
+        <h1>{t("admin.sidebar.t-manage-quiz")}</h1>
       </div>
       <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="0">
-          <Accordion.Header>Quizzes</Accordion.Header>
+          <Accordion.Header>{t("admin.dashboard.t-quiz")}</Accordion.Header>
           <Accordion.Body>
             <div className="quiz-container">
               <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>{t("admin.quiz.t-name")}</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Name quiz"
@@ -167,10 +170,10 @@ const ManageQuizs = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Description</Form.Label>
+                  <Form.Label>{t("admin.quiz.t-desc")}</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Content"
+                    placeholder={t("admin.quiz.t-content")}
                     onChange={(e) => {
                       setDescriptionQuiz(e.target.value);
                     }}
@@ -187,14 +190,14 @@ const ManageQuizs = (props) => {
                   defaultValue={typeQuiz}
                   value={typeQuiz}
                 >
-                  <option>Ouiz type ...</option>
+                  <option>{t("admin.quiz.t-quiz-type")}...</option>
                   <option value="EASY">Easy</option>
                   <option value="MEDIUM">Medium</option>
                   <option value="HARD">Hard</option>
                 </Form.Select>
 
                 <Form.Group controlId="formFile" className="mb-3">
-                  <Form.Label>Thumbnail Quiz</Form.Label>
+                  <Form.Label>{t("admin.quiz.t-quiz-thumb")}</Form.Label>
                   <Form.Control
                     accept="image/*"
                     type="file"
@@ -206,18 +209,18 @@ const ManageQuizs = (props) => {
                 {!_.isEmpty(dataQuizById) ? (
                   <>
                     <Button variant="primary" onClick={handleSubmitUpdateQuiz}>
-                      Update
+                      {t("admin.quiz.t-update")}
                     </Button>
                     <Button
                       variant="outline-secondary ml-2"
                       onClick={handleCloseUpdateQuiz}
                     >
-                      Close Update
+                      {t("admin.user.t-close")}
                     </Button>
                   </>
                 ) : (
                   <Button variant="primary" onClick={handleSubmitCreateQuiz}>
-                    Submit
+                    {t("admin.quiz.t-submit")}
                   </Button>
                 )}
               </Form>
@@ -232,12 +235,12 @@ const ManageQuizs = (props) => {
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="1">
-          <Accordion.Header>Assign Quiz to User</Accordion.Header>
+          <Accordion.Header>{t("admin.quiz.t-assign")}</Accordion.Header>
           <Accordion.Body>
             <div className="quiz-container">
               <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Quiz:</Form.Label>
+                  <Form.Label>{t("admin.dashboard.t-quiz")}</Form.Label>
                   <Select
                     value={selectedQuiz}
                     options={dataQuizAssign}
@@ -246,7 +249,7 @@ const ManageQuizs = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>User:</Form.Label>
+                  <Form.Label>{t("admin.dashboard.t-user")}</Form.Label>
                   <Select
                     value={selectedUser}
                     options={dataUserAssign}
@@ -258,7 +261,7 @@ const ManageQuizs = (props) => {
                   variant="primary"
                   onClick={handleSubmitQuizAssignToUser}
                 >
-                  Assign
+                  {t("admin.quiz.t-btn-assign")}
                 </Button>
               </Form>
             </div>

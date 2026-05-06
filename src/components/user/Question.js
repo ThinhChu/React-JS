@@ -1,8 +1,10 @@
 import _ from "lodash";
 import Form from "react-bootstrap/Form";
+import { useTranslation } from "react-i18next";
 
 const Question = (props) => {
   const { dataQuestion } = props;
+  const { t } = useTranslation();
   // console.log(dataQuestion);
 
   const handleChangeCheckbox = (e, aId, qId) => {
@@ -22,7 +24,7 @@ const Question = (props) => {
           />
         </div>
         <div className="title-q-by-quiz">
-          Question {dataQuestion.questionId} :{" "}
+          {t("admin.dashboard.t-question")} {dataQuestion.questionId} :{" "}
           {dataQuestion.questionDescription}
         </div>
         <div className="list-item-q-by-quiz">

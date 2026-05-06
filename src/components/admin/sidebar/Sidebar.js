@@ -5,8 +5,10 @@ import { MdFeaturedPlayList } from "react-icons/md";
 import React, { useState } from "react";
 import "../../../assets/scss/adminPage.scss";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const CSidebar = (props) => {
+  const { t } = useTranslation();
   const [collapsed, setCollapsed] = useState(false);
   return (
     <Sidebar collapsed={collapsed}>
@@ -22,17 +24,20 @@ const CSidebar = (props) => {
       <div style={{ flex: 1, overflowY: "auto" }}>
         <Menu>
           <MenuItem icon={<IoMdDocument />} component={<Link to="/admin" />}>
-            Dashboard
+            {t("admin.sidebar.t-dashboard")}
           </MenuItem>
-          <SubMenu icon={<MdFeaturedPlayList />} label="Tính năng">
+          <SubMenu
+            icon={<MdFeaturedPlayList />}
+            label={t("admin.sidebar.t-feature")}
+          >
             <MenuItem component={<Link to="/admin/manage-users" />}>
-              Quản lý Users
+              {t("admin.sidebar.t-manage-user")}
             </MenuItem>
             <MenuItem component={<Link to="/admin/manage-quizs" />}>
-              Quản lý bài Quiz
+              {t("admin.sidebar.t-manage-quiz")}
             </MenuItem>
             <MenuItem component={<Link to="/admin/manage-questions" />}>
-              Quản lý câu hỏi (Questions)
+              {t("admin.sidebar.t-manage-question")}
             </MenuItem>
           </SubMenu>
         </Menu>

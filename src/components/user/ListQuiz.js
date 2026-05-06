@@ -6,9 +6,12 @@ import Col from "react-bootstrap/Col";
 import { getQuizByUser } from "../../services/apiQuiz";
 import "../../assets/scss/listQuiz.scss";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 const ListQuiz = (props) => {
   const [arrQuiz, setArrQuiz] = useState([]);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   // Khởi tạo useEffect khi sử dụng API (này là chạy 1 lần khi load trang)
   useEffect(() => {
     getQuiz();
@@ -35,7 +38,7 @@ const ListQuiz = (props) => {
                     src={`data:image/jpeg;base64, ${item.image}`}
                   />
                   <Card.Body>
-                    <Card.Title>Quiz - {i + 1}</Card.Title>
+                    <Card.Title>{t("quiz.t-quiz") + " - " + i + 1}</Card.Title>
                     <Card.Text>{item.description}</Card.Text>
                     <Button
                       variant="primary"
@@ -48,7 +51,7 @@ const ListQuiz = (props) => {
                         });
                       }}
                     >
-                      Start now
+                      {t("quiz.t-btn-s")}
                     </Button>
                   </Card.Body>
                 </Card>

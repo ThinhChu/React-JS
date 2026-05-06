@@ -8,7 +8,7 @@ i18n
   .use(initReactI18next)
   .use(I18nextBrowserLanguageDetector)
   .init({
-    debug: true,
+    debug: false,
     fallbackLng: "en",
     interpolation: {
       escapeValue: false,

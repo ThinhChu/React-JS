@@ -1,8 +1,10 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useTranslation } from "react-i18next";
 // import { toast } from "react-toastify";
 const ModalQuiz = (props) => {
   const { show, setShow, dataSubmitQuiz } = props;
+  const { t } = useTranslation();
   const handleClose = () => {
     setShow(false);
     // props.restDataUser();
@@ -12,20 +14,20 @@ const ModalQuiz = (props) => {
     <>
       <Modal show={show} size={props.size} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Kết quả Quiz của bạn</Modal.Title>
+          <Modal.Title>{t("quiz.t-title-modal")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <span>
-            countCorrect: <b>{dataSubmitQuiz.countCorrect}</b>
+            {t("quiz.t-countCorrect")}: <b>{dataSubmitQuiz.countCorrect}</b>
           </span>
           <br />
           <span>
-            countTotal: <b>{dataSubmitQuiz.countTotal}</b>
+            {t("quiz.t-countTotal")}: <b>{dataSubmitQuiz.countTotal}</b>
           </span>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            {t("admin.user.t-close")}
           </Button>
         </Modal.Footer>
       </Modal>

@@ -3,5 +3,100 @@
         "title": "Multi-language app",
         "description": "Backed by over a decade of experience, Typeform AI helps you build expertly-designed, best-practice forms proven to get more responses.",
         "button": "See plans"
+    },
+    "admin": {
+        "dashboard": {
+            "title": "Admin Dashboard",
+            "t-user": "Users",
+            "t-quiz": "Quizzes",
+            "t-question": "Questions",
+            "t-answer": "Answers",
+            "t-total": "Total"
+        },
+        "sidebar": {
+            "t-dashboard": "Dashboard",
+            "t-feature": "Feature",
+            "t-manage-user": "Manage Users",
+            "t-manage-quiz": "Manage Quizzes",
+            "t-manage-question": "Manage Questions"
+        },
+        "user": {
+            "title": "Manage Users",
+            "t-button-add": "Add new",
+            "t-user-table": "Username",
+            "t-role-table": "Role",
+            "t-action-table": "Actions",
+            "t-action-view-table": "View",
+            "t-action-edit-table": "Edit",
+            "t-action-delete-table": "Delete",
+            "t-not-table": "Not found",
+            "t-prev-table": "< previous",
+            "t-next-table": "next >",
+            "t-add-model": "Add new user",
+            "t-update-model": "Update a user",
+            "t-view-model": "View a user",
+            "t-password": "Password",
+            "t-image": "Image thumbnail",
+            "t-up-image": "Upload image",
+            "t-enter": "Enter",
+            "t-choose": "Choose",
+            "t-close": "Close",
+            "t-save": "Save Changes",
+            "t-delete-model": "Delete a user",
+            "d-delete-model": "Are you sure to delete user has this email:",
+            "t-confirm": "Confirm"
+        },
+        "quiz": {
+            "t-name": "Name",
+            "t-desc": "Description",
+            "t-content": "Content",
+            "t-quiz-type": "Quiz type",
+            "t-quiz-thumb": "Thumbnail Quiz",
+            "t-submit": "Submit",
+            "t-update": "Update",
+            "t-assign": "Assign Quiz to User",
+            "t-btn-assign": "Assign",
+            "t-difficulty": "Difficulty"
+        },
+        "question": {
+            "t-select-quiz": "Select Quiz",
+            "t-add-question": "Add Questions",
+            "t-q-desc": "Question description",
+            "t-up-file": "Upload file",
+            "t-a-desc": "Answer description"
+        }
+    },
+    "header": {
+        "t-home": "Home",
+        "t-user": "User",
+        "t-admin": "Admin",
+        "t-profile": "Profile",
+        "t-logout": "Log out",
+        "t-signup": "Sign up",
+        "t-login": "Login"
+    },
+    "login": {
+        "t-desc": "Continue building forms, gathering responses, and automating your workflows.",
+        "t-account": "Email address",
+        "t-forget-password": "Forget password"
+    },
+    "register": {
+        "t-desc": "Continue building forms, gathering responses, and automating your workflows.",
+        "t-register": "Register"
+    },
+    "quiz": {
+        "t-quiz": "Quiz",
+        "t-btn-s": "Start now",
+        "t-prev": "Prev",
+        "t-next": "Next",
+        "t-finish": "Finish",
+        "t-title-modal": "Your Quiz results",
+        "t-countCorrect": "Count correct",
+        "t-countTotal": "Count total"
+    },
+    "404": {
+        "title": "404 Not Found",
+        "desc": "Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.",
+        "desc-2": "Whenever you need to, be sure to use margin utilities to keep things nice and tidy."
     }
 }

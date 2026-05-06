@@ -11,11 +11,12 @@ import {
   putUpdateUser,
 } from "../../../services/apiServiceUser";
 import __ from "lodash";
+import { useTranslation } from "react-i18next";
 
 const ModalUser = (props) => {
   const { show, setShow, action, dataUpdate, pageCurrent, setPageCurrent } =
     props;
-
+  const { t } = useTranslation();
   const handleClose = () => {
     setShow(false);
     setUserName("");
@@ -132,11 +133,11 @@ const ModalUser = (props) => {
 
   const titleModal = (action) => {
     if (action === "update") {
-      return "Update a user";
+      return t("admin.user.t-update-model");
     } else if (action === "create") {
-      return "Add new user";
+      return t("admin.user.t-add-model");
     } else {
-      return "View a user";
+      return t("admin.user.t-view-model");
     }
   };
 
@@ -150,19 +151,21 @@ const ModalUser = (props) => {
           <Form>
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridUsername">
-                <Form.Label>Username</Form.Label>
+                <Form.Label>{t("admin.user.t-user-table")}</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter username"
-                  autoComplete="Username"
+                  placeholder={
+                    t("admin.user.t-enter") + " " + t("admin.user.t-user-table")
+                  }
+                  autoComplete={t("admin.user.t-user-table")}
                   defaultValue={userName}
                   onChange={handleInputUserName}
                 />
               </Form.Group>
               <Form.Group as={Col} controlId="formGridState">
-                <Form.Label>Role</Form.Label>
+                <Form.Label>{t("admin.user.t-role-table")}</Form.Label>
                 <Form.Select value={role} onChange={handleInputRole}>
-                  <option>Choose...</option>
+                  <option>{t("admin.user.t-choose")}</option>
                   <option>Member</option>
                   <option>ADMIN</option>
                   <option>USER</option>
@@ -175,24 +178,26 @@ const ModalUser = (props) => {
                 <Form.Control
                   type="email"
                   defaultValue={email}
-                  placeholder="Enter email"
+                  placeholder={t("admin.user.t-enter") + " email"}
                   onChange={handleInputEmail}
                 />
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>Password</Form.Label>
+                <Form.Label>{t("admin.user.t-password")}</Form.Label>
                 <Form.Control
                   type="password"
                   defaultValue={password}
-                  placeholder="Password"
+                  placeholder={
+                    t("admin.user.t-enter") + " " + t("admin.user.t-password")
+                  }
                   autoComplete="current-password"
                   onChange={handleInputPassword}
                 />
               </Form.Group>
             </Row>
             <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Image thumbnail</Form.Label>
+              <Form.Label>{t("admin.user.t-image")}</Form.Label>
               <div className="mb-3 text-center preview-image">
                 <Form.Control
                   type="file"
@@ -209,7 +214,7 @@ const ModalUser = (props) => {
                     style={{ maxHeight: "200px" }}
                   />
                 ) : (
-                  <span>Upload image</span>
+                  <span>{t("admin.user.t-up-image")}</span>
                 )}
               </div>
             </Form.Group>
@@ -217,7 +222,7 @@ const ModalUser = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            {t("admin.user.t-close")}
           </Button>
           {action !== "view" && (
             <Button
@@ -228,7 +233,7 @@ const ModalUser = (props) => {
                   : () => handleCreateUser()
               }
             >
-              Save Changes
+              {t("admin.user.t-save")}
             </Button>
           )}
         </Modal.Footer>

@@ -17,8 +17,10 @@ import {
 import { toast } from "react-toastify";
 import { postCreateQuestion } from "../../../services/apiQuestion";
 import { postCreateQuestionByAnswers } from "../../../services/apiAnswer";
+import { useTranslation } from "react-i18next";
 
 const ManageQuestions = (props) => {
+  const { t } = useTranslation();
   const dataDemo = [
     {
       question_id: uuidv4(),
@@ -348,13 +350,15 @@ const ManageQuestions = (props) => {
   return (
     <>
       <div className="header-admin">
-        <h1>Manage Question</h1>
+        <h1>{t("admin.sidebar.t-manage-question")}</h1>
       </div>
       <hr />
 
       <div className="quiz-container pt-3">
         <div className="select-quiz-container" style={{ width: 350 }}>
-          <div className="title-label mb-2">Select Quiz:</div>
+          <div className="title-label mb-2">
+            {t("admin.question.t-select-quiz")}:
+          </div>
           <Select
             value={selectedQuiz}
             options={dataQuizs}
@@ -362,7 +366,9 @@ const ManageQuestions = (props) => {
           />
         </div>
         <div className="question-container mt-4">
-          <div className="title-label mb-2">Add Question:</div>
+          <div className="title-label mb-2">
+            {t("admin.question.t-add-question")}:
+          </div>
           <div className="content-add-question">
             {!_.isEmpty(dataQuestions) && (
               <Form>
@@ -377,7 +383,9 @@ const ManageQuestions = (props) => {
                       >
                         <Form.Group className="mb-3 group-question-item">
                           <FloatingLabel
-                            label={"Question description " + (key + 1)}
+                            label={
+                              t("admin.question.t-q-desc") + " " + (key + 1)
+                            }
                           >
                             <Form.Control
                               type="text"
@@ -403,7 +411,7 @@ const ManageQuestions = (props) => {
                               htmlFor={item.question_id}
                             >
                               <LuImagePlus />
-                              <span>Upload file</span>
+                              <span>{t("admin.question.t-up-file")}</span>
                               <Form.Control
                                 type="file"
                                 id={item.question_id}
@@ -455,7 +463,13 @@ const ManageQuestions = (props) => {
                                         )
                                       }
                                     />
-                                    <FloatingLabel label={"Answers " + (i + 1)}>
+                                    <FloatingLabel
+                                      label={
+                                        t("admin.question.t-a-desc") +
+                                        " " +
+                                        (i + 1)
+                                      }
+                                    >
                                       <Form.Control
                                         type="text"
                                         isInvalid={

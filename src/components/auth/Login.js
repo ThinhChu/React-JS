@@ -7,12 +7,14 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
+import { useTranslation } from "react-i18next";
 
 const Login = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { t } = useTranslation();
 
   const handleLogin = async () => {
     const res = await postLoginUser(email, password);
@@ -29,16 +31,13 @@ const Login = (props) => {
   return (
     <div className="login-container container d-flex flex-column justify-content-center">
       <div className="title-login">
-        <h1>Login</h1>
+        <h1>{t("header.t-login")}</h1>
       </div>
-      <div className="description-login">
-        Continue building forms, gathering responses, and automating your
-        workflows.
-      </div>
+      <div className="description-login">{t("login.t-desc")}</div>
       <div className="form-login mt-3">
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label>{t("login.t-account")}</Form.Label>
             <Form.Control
               type="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -46,7 +45,7 @@ const Login = (props) => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>{t("admin.user.t-password")}</Form.Label>
             <Form.Control
               type="password"
               onChange={(e) => setPassword(e.target.value)}
@@ -55,12 +54,12 @@ const Login = (props) => {
             />
           </Form.Group>
           <Button variant="primary" onClick={handleLogin}>
-            Login
+            {t("header.t-login")}
           </Button>
         </Form>
       </div>
       <div className="forget-login mt-2">
-        <span>Forget password</span>
+        <span>{t("login.t-forget-password")}</span>
       </div>
     </div>
   );

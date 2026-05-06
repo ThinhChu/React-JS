@@ -10,22 +10,38 @@ import {
 import { getDashboardOverview } from "../../services/apiDashboard";
 import "../../assets/scss/dashboardPage.scss";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Dashboard = (props) => {
+  const { t } = useTranslation();
+
   const [dataDashboard, setDataDashboard] = useState([
-    { name: "Users", value: 0 },
-    { name: "Quizzes", value: 0 },
-    { name: "Questions", value: 0 },
-    { name: "Answers", value: 0 },
+    { name: t("admin.dashboard.t-user"), value: 0 },
+    { name: t("admin.dashboard.t-quiz"), value: 0 },
+    { name: t("admin.dashboard.t-question"), value: 0 },
+    { name: t("admin.dashboard.t-answer"), value: 0 },
   ]);
+
   const fetchDashboardOverview = async () => {
     let res = await getDashboardOverview();
     if (res && res.EC === 0) {
       let data = [
-        { name: "Users", value: res.DT.users.total },
-        { name: "Quizzes", value: res.DT.others.countQuiz },
-        { name: "Questions", value: res.DT.others.countQuestions },
-        { name: "Answers", value: res.DT.others.countAnswers },
+        {
+          name: t("admin.dashboard.t-user"),
+          value: res.DT.users.total,
+        },
+        {
+          name: t("admin.dashboard.t-quiz"),
+          value: res.DT.others.countQuiz,
+        },
+        {
+          name: t("admin.dashboard.t-question"),
+          value: res.DT.others.countQuestions,
+        },
+        {
+          name: t("admin.dashboard.t-answer"),
+          value: res.DT.others.countAnswers,
+        },
       ];
       setDataDashboard(data);
     }
@@ -38,14 +54,16 @@ const Dashboard = (props) => {
   return (
     <>
       <div className="dashboard-container">
-        <div className="heading-dashboard">Admin Dashboard</div>
+        <div className="heading-dashboard">{t("admin.dashboard.title")}</div>
         {dataDashboard && (
           <div className="info-number-dashboard-container">
             <div className="box-info-number">
-              {dataDashboard.map((item) => {
+              {dataDashboard.map((item, key) => {
                 return (
-                  <div className="item-info-number">
-                    <div className="title-info-number">{`Total ${item.name}`}</div>
+                  <div className="item-info-number" key={`item-${key}`}>
+                    <div className="title-info-number">
+                      {t("admin.dashboard.t-total")} {item.name}
+                    </div>
                     <div className="number">{item.value}</div>
                   </div>
                 );

@@ -3,8 +3,10 @@ import Button from "react-bootstrap/Button";
 // import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import __ from "lodash";
+import { useTranslation } from "react-i18next";
 
 const TableUsersPaginate = (props) => {
+  const { t } = useTranslation();
   const { listUsers, pageCount, pageCurrent, setPageCurrent } = props;
   const handleUpdateUser = (data) => {
     props.updateUser(data);
@@ -32,10 +34,10 @@ const TableUsersPaginate = (props) => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Username</th>
+            <th>{t("admin.user.t-user-table")}</th>
             <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
+            <th>{t("admin.user.t-role-table")}</th>
+            <th>{t("admin.user.t-action-table")}</th>
           </tr>
         </thead>
         <tbody>
@@ -52,20 +54,20 @@ const TableUsersPaginate = (props) => {
                       variant="primary"
                       onClick={() => handleViewUser(item)}
                     >
-                      View
+                      {t("admin.user.t-action-view-table")}
                     </Button>
 
                     <Button
                       variant="warning mx-2"
                       onClick={() => handleUpdateUser(item)}
                     >
-                      Edit
+                      {t("admin.user.t-action-edit-table")}
                     </Button>
                     <Button
                       variant="danger"
                       onClick={() => handleDeleteUser(item)}
                     >
-                      Delete
+                      {t("admin.user.t-action-delete-table")}
                     </Button>
                   </td>
                 </tr>
@@ -74,19 +76,19 @@ const TableUsersPaginate = (props) => {
 
           {listUsers && listUsers.length === 0 && (
             <tr>
-              <td colSpan={4}>Chưa có nội dung</td>
+              <td colSpan={4}>{t("admin.user.t-not-table")}</td>
             </tr>
           )}
         </tbody>
       </Table>
 
       <ReactPaginate
-        nextLabel="next >"
+        nextLabel={t("admin.user.t-next-table")}
         onPageChange={handlePageClick}
         pageRangeDisplayed={3}
         marginPagesDisplayed={2}
         pageCount={pageCount}
-        previousLabel="< previous"
+        previousLabel={t("admin.user.t-prev-table")}
         pageClassName="page-item"
         pageLinkClassName="page-link"
         previousClassName="page-item"

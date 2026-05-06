@@ -2,8 +2,11 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { deleteUser } from "../../../services/apiServiceUser";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
+
 const ModalDeleteUser = (props) => {
   const { show, setShow, dataDelete, setPageCurrent } = props;
+  const { t } = useTranslation();
   const handleClose = () => {
     setShow(false);
     // props.restDataUser();
@@ -26,17 +29,17 @@ const ModalDeleteUser = (props) => {
     <>
       <Modal show={show} size={props.size} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Delete a user</Modal.Title>
+          <Modal.Title>{t("admin.user.t-delete-model")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure to delete user has this email: {dataDelete.email} ?
+          {t("admin.user.d-delete-model") + " " + dataDelete.email} ?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            {t("admin.user.t-close")}
           </Button>
           <Button variant="primary" onClick={handleDeleteUser}>
-            Confirm
+            {t("admin.user.t-confirm")}
           </Button>
         </Modal.Footer>
       </Modal>

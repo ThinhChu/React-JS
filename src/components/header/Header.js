@@ -9,10 +9,12 @@ import { postLogoutUser } from "../../services/apiServiceUser";
 import { useDispatch } from "react-redux";
 import { doLogout } from "../../redux/action/userAction";
 import Language from "./Language";
+import { useTranslation } from "react-i18next";
 
 function BasicExample() {
   const account = useSelector((state) => state.account.account);
   const isAuthStatus = useSelector((state) => state.account.isAuthStatus);
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,34 +41,36 @@ function BasicExample() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavLink to="/" className="nav-link">
-              Home
+              {t("header.t-home")}
             </NavLink>
             <NavLink to="/user" className="nav-link">
-              User
+              {t("header.t-user")}
             </NavLink>
             <NavLink to="/admin" className="nav-link">
-              Admin
+              {t("header.t-admin")}
             </NavLink>
           </Nav>
           <Nav>
             {isAuthStatus ? (
               <NavDropdown title={account.username} id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.3">Profile</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">
+                  {t("header.t-profile")}
+                </NavDropdown.Item>
                 <NavDropdown.Item onClick={handleLogoutUser}>
-                  Log out
+                  {t("header.t-logout")}
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
               <>
                 <Button variant="primary" onClick={() => handleLoginRouter()}>
-                  Đăng nhập
+                  {t("header.t-login")}
                 </Button>
                 <Button
                   variant="outline-primary"
                   onClick={() => handleRegisterRouter()}
                   className="ml-2"
                 >
-                  Đăng ký
+                  {t("header.t-signup")}
                 </Button>
               </>
             )}

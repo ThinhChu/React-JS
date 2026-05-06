@@ -1,9 +1,11 @@
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import _ from "lodash";
+import { useTranslation } from "react-i18next";
 
 const TableQuizs = (props) => {
   const { dataQuizs } = props;
+  const { t } = useTranslation();
 
   return (
     <>
@@ -11,10 +13,10 @@ const TableQuizs = (props) => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Difficulty</th>
-            <th>Actions</th>
+            <th>{t("admin.quiz.t-name")}</th>
+            <th>{t("admin.quiz.t-desc")}</th>
+            <th>{t("admin.quiz.t-difficulty")}</th>
+            <th>{t("admin.user.t-action-table")}</th>
           </tr>
         </thead>
         <tbody>
@@ -32,13 +34,13 @@ const TableQuizs = (props) => {
                         variant="warning mx-2"
                         onClick={() => props.handleUpdateQuiz(item.id)}
                       >
-                        Edit
+                        {t("admin.user.t-action-edit-table")}
                       </Button>
                       <Button
                         variant="danger"
                         onClick={() => props.handleDeleteQuiz(item.id)}
                       >
-                        Delete
+                        {t("admin.user.t-action-delete-table")}
                       </Button>
                     </div>
                   </td>
