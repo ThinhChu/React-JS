@@ -50,6 +50,21 @@ const postLogoutUser = (email, refresh_token) => {
   return axios.post("api/v1/logout", { email, refresh_token });
 };
 
+const postUpdateProfile = (username, userImage) => {
+  // Data
+  const data = new FormData();
+  data.append("username", username);
+  data.append("userImage", userImage);
+  return axios.post("api/v1/profile", data);
+};
+
+const postChangePassword = (currentPassword, newPassword) => {
+  return axios.post("api/v1/change-password", {
+    current_password: currentPassword,
+    new_password: newPassword,
+  });
+};
+
 export {
   postCreateNewUser,
   getAllUsers,
@@ -59,4 +74,6 @@ export {
   postLoginUser,
   postRegisterUser,
   postLogoutUser,
+  postUpdateProfile,
+  postChangePassword,
 };

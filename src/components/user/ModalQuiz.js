@@ -3,11 +3,16 @@ import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
 // import { toast } from "react-toastify";
 const ModalQuiz = (props) => {
-  const { show, setShow, dataSubmitQuiz } = props;
+  const { show, setShow, dataSubmitQuiz, setShowResult } = props;
   const { t } = useTranslation();
   const handleClose = () => {
     setShow(false);
     // props.restDataUser();
+  };
+
+  const handleShowResult = () => {
+    setShowResult(true);
+    setShow(false);
   };
 
   return (
@@ -26,6 +31,9 @@ const ModalQuiz = (props) => {
           </span>
         </Modal.Body>
         <Modal.Footer>
+          <Button variant="success" onClick={handleShowResult}>
+            Hiện đáp án
+          </Button>
           <Button variant="secondary" onClick={handleClose}>
             {t("admin.user.t-close")}
           </Button>

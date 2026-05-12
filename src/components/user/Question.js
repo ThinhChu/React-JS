@@ -1,14 +1,34 @@
 import _ from "lodash";
 import Form from "react-bootstrap/Form";
 import { useTranslation } from "react-i18next";
+import { TiTick } from "react-icons/ti";
+import { IoIosClose } from "react-icons/io";
+import "../../assets/scss/questions.scss";
 
 const Question = (props) => {
-  const { dataQuestion } = props;
+  const { dataQuestion, showResult } = props;
   const { t } = useTranslation();
-  // console.log(dataQuestion);
 
   const handleChangeCheckbox = (e, aId, qId) => {
     props.handleCheckBox(aId, qId);
+  };
+
+  const checkCurrent = (isCorrect) => {
+    if (showResult) {
+      if (isCorrect) {
+        return (
+          <div className="isCorrectTrue">
+            <TiTick />
+          </div>
+        );
+      } else {
+        return (
+          <div className="isCorrectFalse">
+            <IoIosClose />
+          </div>
+        );
+      }
+    }
   };
 
   if (_.isEmpty(dataQuestion)) {
@@ -30,7 +50,7 @@ const Question = (props) => {
         <div className="list-item-q-by-quiz">
           {!_.isEmpty(dataQuestion.answers) &&
             dataQuestion.answers.map((val, key) => {
-              // console.log(val);
+              // console.log(val.isCorrect);
               return (
                 <div className="item-q-by-quiz" key={`question-${key}`}>
                   <Form.Check type={"checkbox"} id={`question-${key}`}>
@@ -41,7 +61,9 @@ const Question = (props) => {
                         handleChangeCheckbox(e, val.id, dataQuestion.questionId)
                       }
                     />
-                    <Form.Check.Label>{val.description}</Form.Check.Label>
+                    <Form.Check.Label>
+                      {val.description} {checkCurrent(val.isCorrect)}
+                    </Form.Check.Label>
                   </Form.Check>
                 </div>
               );

@@ -73,7 +73,10 @@
         "t-profile": "Hồ sơ",
         "t-logout": "Đăng xuất",
         "t-signup": "Đăng ký",
-        "t-login": "Đăng nhập"
+        "t-login": "Đăng nhập",
+        "t-current-ps": "Mật khẩu hiện tại",
+        "t-new-ps": "Mật khẩu mới",
+        "t-history": "Lịch sử"
     },
     "login": {
         "t-desc": "Tiếp tục xây dựng biểu mẫu, thu thập phản hồi và tự động hóa quy trình công việc của bạn.",

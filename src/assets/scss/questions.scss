@@ -1,0 +1,11 @@
+.q-content {
+  .form-check-label {
+    display: flex;
+    .isCorrectTrue {
+      color: green;
+    }
+    .isCorrectFalse {
+      color: red;
+    }
+  }
+}

@@ -22,7 +22,7 @@ const TimeOut = (props) => {
     return () => {
       clearInterval(timer);
     };
-  }, [count, timeUp]);
+  }, [count]);
   return <div>{formatTime(count)}</div>;
 };
 

@@ -19,6 +19,7 @@ const DetailQuiz = () => {
   const location = useLocation();
   // const image = location.state.image;
   const description = location.state.description;
+  const [showResult, setShowResult] = useState(false);
   const [show, setShow] = useState(false);
   const [dataQuiz, setDataQuiz] = useState([]);
   const [dataSubmitQuiz, setDataSubmitQuiz] = useState([]);
@@ -68,6 +69,7 @@ const DetailQuiz = () => {
               questionImage = item.image;
             }
             item.answers["isSelect"] = false;
+            item.answers["isCorrect"] = false;
             answers.push(item.answers);
           });
           return { questionId, questionDescription, questionImage, answers };
@@ -113,7 +115,27 @@ const DetailQuiz = () => {
     if (res && res.EC === 0) {
       setShow(true);
       setDataSubmitQuiz(res.DT);
+      setDataQuiz(handleSubmitDataQuiz(dataQuiz, res.DT.quizData));
     }
+  };
+
+  const handleSubmitDataQuiz = (dataQuizzes, dataSubmit) => {
+    let dataQuizClone = _.cloneDeep(dataQuizzes);
+    let dataCorrect = dataSubmit;
+    let dataClone = dataQuizClone.map((item) => {
+      let dataC = dataCorrect.find(
+        (val) => +val.questionId === +item.questionId,
+      )?.systemAnswers?.[0];
+
+      item.answers = item.answers.map((v) => {
+        if (+v.id === +dataC.id) {
+          return { ...v, isCorrect: dataC.correct_answer };
+        }
+        return v;
+      });
+      return item;
+    });
+    return dataClone;
   };
 
   return (
@@ -135,6 +157,7 @@ const DetailQuiz = () => {
                       : []
                   }
                   handleCheckBox={handleCheckBox}
+                  showResult={showResult}
                 />
               </div>
               <div className="q-footer">
@@ -148,7 +171,11 @@ const DetailQuiz = () => {
                   {t("quiz.t-next")}
                 </Button>
 
-                <Button variant="warning" onClick={handleFinishQuiz}>
+                <Button
+                  variant="warning"
+                  disabled={showResult ? "disabled" : ""}
+                  onClick={handleFinishQuiz}
+                >
                   {t("quiz.t-finish")}
                 </Button>
               </div>
@@ -169,6 +196,7 @@ const DetailQuiz = () => {
           data
           size="xl"
           setShow={setShow}
+          setShowResult={setShowResult}
         />
       </div>
     </>

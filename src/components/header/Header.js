@@ -10,10 +10,13 @@ import { useDispatch } from "react-redux";
 import { doLogout } from "../../redux/action/userAction";
 import Language from "./Language";
 import { useTranslation } from "react-i18next";
+import Profile from "../user/Profile";
+import { useState } from "react";
 
 function BasicExample() {
   const account = useSelector((state) => state.account.account);
   const isAuthStatus = useSelector((state) => state.account.isAuthStatus);
+  const [show, setShow] = useState(false);
   const { t } = useTranslation();
 
   const navigate = useNavigate();
@@ -31,6 +34,9 @@ function BasicExample() {
       dispatch(doLogout());
       navigate("/login");
     }
+  };
+  const handleOpenProfile = () => {
+    setShow(true);
   };
 
   return (
@@ -52,14 +58,22 @@ function BasicExample() {
           </Nav>
           <Nav>
             {isAuthStatus ? (
-              <NavDropdown title={account.username} id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.3">
-                  {t("header.t-profile")}
-                </NavDropdown.Item>
-                <NavDropdown.Item onClick={handleLogoutUser}>
-                  {t("header.t-logout")}
-                </NavDropdown.Item>
-              </NavDropdown>
+              <>
+                <NavDropdown title={account.username} id="basic-nav-dropdown">
+                  <NavDropdown.Item onClick={handleOpenProfile}>
+                    {t("header.t-profile")}
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleLogoutUser}>
+                    {t("header.t-logout")}
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <Profile
+                  show={show}
+                  size="xl"
+                  setShow={setShow}
+                  account={account}
+                />
+              </>
             ) : (
               <>
                 <Button variant="primary" onClick={() => handleLoginRouter()}>

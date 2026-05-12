@@ -73,7 +73,10 @@
         "t-profile": "Profile",
         "t-logout": "Log out",
         "t-signup": "Sign up",
-        "t-login": "Login"
+        "t-login": "Login",
+        "t-current-ps": "Current password",
+        "t-new-ps": "New password",
+        "t-history": "History"
     },
     "login": {
         "t-desc": "Continue building forms, gathering responses, and automating your workflows.",
